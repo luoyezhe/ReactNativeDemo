@@ -1,0 +1,2 @@
+export const ACCOUNT_LOGIN = "ACCOUNT_LOGIN"
+export const SHOW_LOADING = "SHOW_LOADING"

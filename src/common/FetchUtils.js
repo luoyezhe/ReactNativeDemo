@@ -1,0 +1,54 @@
+import Urls from '../api/Urls'
+import {stringifyParams} from '../utils/Utils'
+
+export const Fetch = (url, method, params) => {
+    const header = new Headers({
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    });
+    const options = {
+        method,
+        header,
+    };
+    let toUrl = Urls.host + url;
+    if (method === 'get') {
+        const strParams = stringifyParams(params);
+        if (strParams) {
+            toUrl += '?' + strParams;
+        }
+        delete options.body
+    } else {
+        options.body = params;
+    }
+    console.log("请求发起：-----------");
+    console.log("请求url：-----------");
+    console.log(toUrl);
+    console.log("请求options：-----------");
+    console.log(options);
+    return fetch(toUrl, options).then(res => res.json()).then(res => {
+        console.log("请求接口结果：-----------");
+        console.log(res);
+        return res;
+    }).catch(err => err);
+}
+export const postFetch = (url, params = {}) => {
+
+    return Fetch(url, 'post', params)
+
+}
+export const getFetch = (url, params = {}) => {
+
+    return Fetch(url, 'get', params)
+}
+export const putFetch = (url, params = {}) => {
+
+    return Fetch(url, 'put', params)
+}
+export const patchFetch = (url, params = {}) => {
+
+    return Fetch(url, 'patch', params)
+}
+export const deleteFetch = (url, params = {}) => {
+
+    return Fetch(url, 'delete', params)
+}
