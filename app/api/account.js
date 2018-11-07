@@ -1,7 +1,9 @@
 import api from './api'
 
-export default {
+const account = {
 		login (data) {
 				return api.post(`/v1/api/user/token/`, data)
 		}
 }
+
+export default account

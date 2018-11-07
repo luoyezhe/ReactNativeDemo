@@ -1,3 +1,13 @@
 {
-  "presets": ["module:metro-react-native-babel-preset"]
+  "presets": ["module:metro-react-native-babel-preset"],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "@app": "./app"
+      },
+      "extensions": [".js", ".ios.js", ".android.js"]
+    }
+    ]
+  ]
 }

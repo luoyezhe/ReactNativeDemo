@@ -1,23 +1,16 @@
-// import BaseView from '../../component/BaseView'
-import React, { Component } from 'react';
+import React from 'react';
+import { storage } from '@app/storage/index.js'
+
 import {
 		View
 } from 'react-native';
-import {
-		Container,
-		Content,
-		Form,
-		Item,
-		Input,
-		Icon
-} from 'native-base';
 
 import { Button, FormLabel, FormInput, FormValidationMessage, Text } from 'react-native-elements';
 
-import BaseView from '../../component/BaseView';
-import { AppColors } from '../../style'
-import showToast from '../../utils/toast';
-import api from '../../api/account'
+import BaseView from '@app/component/BaseView';
+import { AppColors } from '@app/style'
+import api from '@app/api/account'
+import { Actions } from 'react-native-router-flux';
 
 export default class Login extends BaseView {
 		constructor(props) {
@@ -66,18 +59,23 @@ export default class Login extends BaseView {
 				})
 		}
 		onSubmit () {
-				showToast('submit')
-				let data = {
-						cellphone: this.state.name,
-						password: this.state.password
-				}
-				console.log(data)
-				api.login(data)
-						.then((res) => {
-								showToast(res.token)
-						})
-						.catch((error) => {
-								showToast(error.data.message)
-						})
+				storage.save('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6InBia2RmMl9zaGEyNTYkMzAwMDAkSDRVYW5CR2lYbFlTJDFLRG9YdkNsZGVGQUJ0UlBaQUhiY3RmOHYvTkcyV21YSWo2bUltbGpYdjA9IiwidXNlcl9pZCI6MTQ4NzIsInBsYXRmb3JtIjoicGMifQ.oXxkhvYmhzc5vafIai8NKTGuqNAfS9XmFszt4tD-xsI')
+				storage.save('username', '18518572248');
+
+				Actions.home();
+
+				// showToast('submit');
+				// let data = {
+				// 		cellphone: this.state.name,
+				// 		password: this.state.password
+				// }
+				// console.log(data);
+				// api.login(data)
+				// 		.then((res) => {
+				// 				showToast(res.token)
+				// 		})
+				// 		.catch((error) => {
+				// 				showToast(error.data.message)
+				// 		})
 		}
 }
