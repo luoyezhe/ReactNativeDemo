@@ -6,9 +6,10 @@ import React, { Component } from 'react';
 		'Shake or press menu button for dev menu',
 *  所有页面的基类
 * */
-import showToast from '../utils/toast'
+import showToast from '@app/utils/toast';
+
 export default class BaseView extends Component {
-		constructor (props) {
-				super (props);
-		}
+    constructor(props) {
+        super(props);
+    }
 }

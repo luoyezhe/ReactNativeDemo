@@ -1,8 +1,5 @@
-import {
-    ACCOUNT_LOGIN
-} from "../ActionTypes";
+import { createAction, handleActions } from 'redux-actions';
 
-export const login = (account) => ({
-		type: ACCOUNT_LOGIN,
-		account
-})
+import { ACCOUNT_LOGIN } from '../ActionTypes';
+
+export const account_login = createAction(ACCOUNT_LOGIN);

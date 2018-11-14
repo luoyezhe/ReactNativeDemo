@@ -1,13 +1,18 @@
-import {ACCOUNT_LOGIN} from '../action/account'
-import {ACCOUNT_LOGOUT} from '../redux/action/account/logout'
+import { handleActions } from 'redux-actions';
 
-export default account = (state = {}, action) => {
+import { ACCOUNT_LOGIN } from '../ActionTypes';
 
-    switch (action.type) {
-        case ACCOUNT_LOGIN:
-            return action.account;
-        case ACCOUNT_LOGOUT:
-            return {}
-    }
-    return state;
-}
+const initialState = {};
+
+const accountReducer = handleActions(
+    {
+        [ACCOUNT_LOGIN](state, action) {
+            return {
+                ...state,
+                ...action
+            };
+        }
+    },
+    initialState
+);
+export default accountReducer;

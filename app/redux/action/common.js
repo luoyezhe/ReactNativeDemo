@@ -1,12 +1,10 @@
-import {
-		SHOW_LOADING
-} from '../ActionTypes'
+import { SHOW_LOADING } from '../ActionTypes';
 
-export const showLoading = (value) => {
-		return (dispatch) => {
-				dispatch({
-						type: SHOW_LOADING,
-						payload: value
-				})
-		}
-}
+export const showLoading = value => {
+    return dispatch => {
+        dispatch({
+            type: SHOW_LOADING,
+            payload: value
+        });
+    };
+};

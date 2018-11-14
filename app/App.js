@@ -7,20 +7,15 @@
  */
 
 import React, { Component } from 'react';
-import Router from './router/Router'
-import {
-		View,
-		Text
-} from 'react-native'
+import { View, Text } from 'react-native';
+import Router from './router/Router';
 // <View>
 // <Text >
 // suibianxiexie
 // </Text>
 // </View>
 export default class App extends Component {
-		render() {
-				return (
-						<Router/>
-				);
-		}
+    render() {
+        return <Router />;
+    }
 }

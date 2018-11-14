@@ -1,4 +1,4 @@
-export const parseParams = (strParams: string = "") => {
+export const parseParams = (strParams: string = '') => {
     let string = strParams.split('&');
     let res = {};
     for (let i = 0; i < string.length; i++) {
@@ -14,12 +14,14 @@ export const stringifyParams = (jsonParams: Object = {}) => {
     let arr = [];
     for (let i in jsonParams) {
         if (jsonParams.hasOwnProperty(i)) {
-            arr.push(encodeURIComponent(i) + "=" + encodeURIComponent(jsonParams[i]));
+            arr.push(
+                encodeURIComponent(i) + '=' + encodeURIComponent(jsonParams[i])
+            );
         }
     }
-    return arr.join("&");
+    return arr.join('&');
 };
 
 export const isLogin = (userInfo: Object = {}) => {
-    return !!userInfo['id']
+    return !!userInfo.id;
 };
