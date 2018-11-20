@@ -1,1 +1,2 @@
-export const BASE_URL = 'http://www.ezhongbiao.com'
+export const BASE_URL = 'https://ezhongbiao.marketbox.cn';
+export const PAGE_SIZE = 15;

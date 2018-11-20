@@ -11,9 +11,14 @@ const brand = {
     }
 };
 
+const list = {
+    primaryColor: '#24292e'
+};
+
 const text = {
     textTitle: '#555',
-    textDefault: '#AAA',
+    textDefault: '#19192d',
+    textHint: '',
     textPrimary: '#EEE',
     textSecondary: '#333333',
     textLink: '#009688',
@@ -23,5 +28,6 @@ const text = {
 export default {
     ...app,
     ...brand,
+    ...list,
     ...text
 };

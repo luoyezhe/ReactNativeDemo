@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, StyleSheet } from 'react';
 
 /*
 * 	ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 * */
 import showToast from '@app/utils/toast';
 
-export default class BaseView extends Component {
+export default class BaseView extends React.Component {
     constructor(props) {
         super(props);
     }

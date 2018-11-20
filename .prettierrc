@@ -1,4 +1,7 @@
 {
     tabWidth: 4,
-    singleQuote: true
+    singleQuote: true,
+    bracketSpacing: true,
+    jsxBracketSameLine: true,
+    parser: 'flow'
 }

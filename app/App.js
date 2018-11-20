@@ -7,14 +7,13 @@
  */
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+
 import Router from './router/Router';
-// <View>
-// <Text >
-// suibianxiexie
-// </Text>
-// </View>
-export default class App extends Component {
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return <Router />;
     }

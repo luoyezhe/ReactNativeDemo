@@ -1,5 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
+import PropTypes from 'prop-types';
 import {
     Button,
     FormLabel,
@@ -7,7 +8,7 @@ import {
     FormValidationMessage,
     Text
 } from 'react-native-elements';
-import { storage } from '@app/storage/index.js';
+import storage from '@app/storage/DeviceStorage.js';
 
 import BaseView from '@app/component/BaseView';
 import { AppColors } from '@app/style';
@@ -57,7 +58,6 @@ export default class Login extends BaseView {
             password: text
         });
     }
-
     onSubmit() {
         storage.save(
             'token',
@@ -65,7 +65,7 @@ export default class Login extends BaseView {
         );
         storage.save('username', '18518572248');
 
-        Actions.home();
+        Actions.bulletinHome();
 
         // showToast('submit');
         // let data = {

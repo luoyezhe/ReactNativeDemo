@@ -1,41 +1,44 @@
 import axios from 'axios';
 import Urls from './Urls';
 import { BASE_URL } from '@app/config.js';
-import { storage } from '@app/storage';
+import storage from '@app/storage/DeviceStorage.js';
+import { AsyncStorage } from 'react-native';
 
 const api = axios.create({
     baseURL: BASE_URL
 });
 
-const getToken = async () => {
-    let token = null;
-    await storage.load('token', data => {
-        token = data;
+async function getToken() {
+    await storage.get('token').then(value => {
+        console.log('value', value);
+        return value;
     });
-    return token;
-};
+}
 
-api.interceptors.request.use(function(request) {
-    console.log('request', request);
-    const token = getToken();
-    if (token) {
-        request.headers.common.Authorization = `Bearer ${token}`;
-    }
-    return request;
-});
+async function interceptors() {
+    let token = await storage.get('token');
+    api.interceptors.request.use(function(request) {
+        if (token) {
+            request.headers.common.Authorization = `Bearer ${token}`;
+        }
+        console.log('request', request);
+        return request;
+    });
 
-api.interceptors.response.use(
-    function(response) {
-        console.log(response);
-        return response.data.data || response.data;
-    },
-    function(error) {
-        console.log(error.response);
-        // if (error.response && error.response.data.error_code) {
-        //
-        // }
-        return Promise.reject(error.response.data);
-    }
-);
+    api.interceptors.response.use(
+        function(response) {
+            console.log(response);
+            return response.data.data || response.data;
+        },
+        function(error) {
+            console.log(error.response);
+            // if (error.response && error.response.data.error_code) {
+            //
+            // }
+            return Promise.reject(error.response.data);
+        }
+    );
+}
+interceptors();
 
 export default api;
