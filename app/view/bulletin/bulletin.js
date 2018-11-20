@@ -57,9 +57,15 @@ class Bulletin extends BaseView {
         let params = {
             page: this.page
         };
-        bulletinAction.getBulletinList(params, res => {
-            this.pullList.loadMoreComplete();
-        });
+        bulletinAction.getBulletinList(
+            params,
+            res => {
+                this.pullList.loadMoreComplete();
+            },
+            error => {
+                this.pullList.loadMoreComplete();
+            }
+        );
     }
     renderRow(rowData) {
         return (

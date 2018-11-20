@@ -35,15 +35,13 @@ export default class Main extends BaseView {
                     this.drawer = ref;
                 }}
                 content={<SideBar closeDrawer={this.closeDrawer} />}
-                onClose={() => this.closeDrawer()}
-            >
+                onClose={() => this.closeDrawer()}>
                 <Container style={{ backgroundColor: '#ffff00' }}>
                     <Header>
                         <Left>
                             <Button
                                 transparent
-                                onPress={() => this.openDrawer()}
-                            >
+                                onPress={() => this.openDrawer()}>
                                 <Icon name="menu" />
                             </Button>
                         </Left>
