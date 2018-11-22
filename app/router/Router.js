@@ -12,11 +12,14 @@ import BulletinHome from '@app/view/bulletin/home.js';
 import Bulletin from '@app/view/bulletin/bulletin.js';
 import Bidding from '@app/view/bulletin/bidding.js';
 import BulletinOther from '@app/view/bulletin/other.js';
+import BulletinDetail from '@app/view/bulletin/detail.js';
 
 // 拟建
 import Bulledin from '@app/view/bulledin/bulledin.js';
 
 import Mine from '@app/view/mine/mine.js';
+
+import Test from '@app/view/test/test.js';
 
 const router = () => {
     return (
@@ -69,9 +72,20 @@ const router = () => {
                             hideNavBar
                         />
                         <Scene
+                            title="标讯详情"
+                            key="bulletinDetail"
+                            component={BulletinDetail}
+                        />
+                        <Scene
                             title="拟建"
                             key="bulledin"
                             component={Bulledin}
+                            hideNavBar
+                        />
+                        <Scene
+                            title="练习"
+                            key="test"
+                            component={Test}
                             hideNavBar
                         />
                     </Stack>

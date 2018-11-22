@@ -1,18 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
+import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import {
-    Container,
-    Header,
-    Content,
-    Card,
-    CardItem,
-    Text,
-    Body
-} from 'native-base';
+import { Card, CardItem, Text, Body } from 'native-base';
 
 import { AppStyles } from '@app/style';
 
-class BulletinItem extends React.Component {
+class BulletinItem extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -20,19 +13,25 @@ class BulletinItem extends React.Component {
     render() {
         let { item } = this.props;
         return (
-            <Card>
-                <CardItem header>
-                    <Text>{item.title}</Text>
-                </CardItem>
-                <CardItem>
-                    <Body>
-                        <Text>内容</Text>
-                    </Body>
-                </CardItem>
-                <CardItem footer>
-                    <Text>底部</Text>
-                </CardItem>
-            </Card>
+            <TouchableOpacity
+                onPress={() => {
+                    console.log('list-item-click');
+                    this.props.onPressItem && this.props.onPressItem();
+                }}>
+                <Card>
+                    <CardItem header>
+                        <Text>{item.title}</Text>
+                    </CardItem>
+                    <CardItem>
+                        <Body>
+                        <Text>{item.is_collect ? '已收藏' : '收藏'}</Text>
+                        </Body>
+                    </CardItem>
+                    <CardItem footer>
+                        <Text>底部</Text>
+                    </CardItem>
+                </Card>
+            </TouchableOpacity>
         );
     }
 }

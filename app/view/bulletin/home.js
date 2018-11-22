@@ -5,6 +5,7 @@ import {
     Footer,
     FooterTab,
     Button,
+    View,
     Text
 } from 'native-base';
 
@@ -57,9 +58,9 @@ export default class BulletinHome extends BaseView {
     render() {
         return (
             <Main>
-                <Content>
+                <View style={{ backgroundColor: 'red', flex: 1 }}>
                     <this.state.AppComponent />
-                </Content>
+                </View>
                 <Footer>
                     <FooterTab>
                         <Button

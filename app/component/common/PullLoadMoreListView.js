@@ -93,6 +93,7 @@ class PullLoadMoreListView extends React.Component {
      * 加载更多
      * */
     loadMore() {
+        console.log('=========pullLoadMore===========');
         if (this.state.isRefreshing) {
             return;
         }
@@ -165,7 +166,7 @@ class PullLoadMoreListView extends React.Component {
                 initialNumToRender={PAGE_SIZE}
                 onEndReachedThreshold={0.1}
                 keyExtractor={(item, index) => index.toString()}
-                onEndReached={this.loadMore}
+                onEndReached={() => this.loadMore()}
                 ListFooterComponent={this.renderFooter}
                 data={this.props.dataSource}
             />
@@ -188,6 +189,7 @@ class PullLoadMoreListView extends React.Component {
     }
 
     refreshComplete(showLoadMore = false, scrollToTop = false) {
+        console.log('=============pullRefreshComplete==============');
         this.setState({
             isRefreshing: false,
             isRefresh: false,

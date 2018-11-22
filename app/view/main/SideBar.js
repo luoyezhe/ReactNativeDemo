@@ -29,6 +29,15 @@ export default class SideBar extends BaseView {
                         }}>
                         <Text>拟建</Text>
                     </Button>
+                    <Button
+                        dark
+                        bordered
+                        onPress={() => {
+                            this.props.closeDrawer();
+                            Actions.mine();
+                        }}>
+                        <Text>我的</Text>
+                    </Button>
                 </Content>
             </Container>
         );

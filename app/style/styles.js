@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontSize: sizes.normalTextSize
     },
     mainBox: {
-        backgroundColor: colors.cardBackground,
+        backgroundColor: '#ccc',
         flex: 1
     },
     flexDirectionRowNotFlex: {

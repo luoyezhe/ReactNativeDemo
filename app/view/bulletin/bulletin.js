@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Actions } from 'react-native-router-flux';
 
 import * as bulletinActions from '@app/redux/action/bulletin.js';
 import BaseView from '@app/component/BaseView';
@@ -21,13 +22,15 @@ class Bulletin extends BaseView {
     constructor(props) {
         super(props);
         this.state = {};
-        this.page = 1;
         this.refresh = this.refresh.bind(this);
         this.loadMore = this.loadMore.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.renderRow = this.renderRow.bind(this);
     }
     componentDidMount() {
+        if (this.props.bulletinDate && this.props.bulletinDate.length > 0) {
+            return;
+        }
         InteractionManager.runAfterInteractions(() => {
             this.refreshData();
         });
@@ -41,29 +44,27 @@ class Bulletin extends BaseView {
     refresh() {
         console.log('============refresh==============');
         let { bulletinAction } = this.props;
-        this.page = 1;
         let params = {
-            page: this.page
+            page: 1
         };
         bulletinAction.getBulletinList(params, res => {
             console.log('=============refreshComplete=================');
-            this.pullList.refreshComplete();
+            this.pullList.refreshComplete(this.props.hasNext);
         });
     }
     loadMore() {
         console.log('============loadMore==============');
         let { bulletinAction } = this.props;
-        this.page++;
         let params = {
-            page: this.page
+            page: this.props.page
         };
         bulletinAction.getBulletinList(
             params,
             res => {
-                this.pullList.loadMoreComplete();
+                this.pullList.loadMoreComplete(this.props.hasNext);
             },
             error => {
-                this.pullList.loadMoreComplete();
+                this.pullList.loadMoreComplete(this.props.hasNext);
             }
         );
     }
@@ -73,15 +74,19 @@ class Bulletin extends BaseView {
                 item={rowData}
                 onPressItem={() => {
                     console.log('to detail');
+                    Actions.bulletinDetail({ id: rowData.info_uuid });
                 }}
             />
         );
     }
     render() {
-        let { bulletinState } = this.props;
-        let dataSource = bulletinState.bulletin_data_list;
+        // let dataSource = this.props.bulletinDate;
+        let dataSource = super.getListDataFromSource(
+            'bulletin',
+            this.props.bulletinDate
+        );
         return (
-            <View style={AppStyles.mainBox}>
+            <View style={{ backgroundColor: '#ccc', flex: 1 }}>
                 <StatusBar
                     hidden={false}
                     backgroundColor={'transparent'}
@@ -105,7 +110,9 @@ class Bulletin extends BaseView {
 
 export default connect(
     state => ({
-        bulletinState: state.bulletin
+        bulletinDate: state.bulletin.bulletin.data,
+        page: state.bulletin.bulletin.page,
+        hasNext: state.bulletin.bulletin.next
     }),
     dispatch => ({
         bulletinAction: bindActionCreators(bulletinActions, dispatch)

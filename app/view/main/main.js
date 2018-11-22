@@ -50,7 +50,7 @@ export default class Main extends BaseView {
                         </Body>
                         <Right>
                             <Button transparent>
-                                <Icon name="home" />
+                                <Icon name="search" />
                             </Button>
                         </Right>
                     </Header>
