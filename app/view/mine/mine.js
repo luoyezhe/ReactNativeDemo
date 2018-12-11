@@ -13,7 +13,7 @@ import ImagePicker from 'react-native-image-picker';
 import BaseView from '@app/component/BaseView';
 import Main from '@app/view/main/main.js';
 
-// 拟建
+// 我的
 export default class Mine extends BaseView {
     constructor(props) {
         super(props);
