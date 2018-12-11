@@ -45,8 +45,7 @@ class Bulletin extends BaseView {
         console.log('============refresh==============');
         let { bulletinAction } = this.props;
         let params = {
-            page: 1,
-            page_size: 15
+            page: 1
         };
         bulletinAction.getBulletinList(params, res => {
             console.log('=============refreshComplete=================');
@@ -57,8 +56,7 @@ class Bulletin extends BaseView {
         console.log('============loadMore==============');
         let { bulletinAction } = this.props;
         let params = {
-            page: this.props.page + 1,
-            page_size: 15
+            page: this.props.page
         };
         bulletinAction.getBulletinList(
             params,

@@ -7,41 +7,33 @@ import React, { Component, StyleSheet } from 'react';
 *  所有页面的基类
 * */
 import showToast from '@app/utils/toast';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux/index';
+import { dataSource } from '@app/redux/reducer/dataSource';
 
-class BaseView extends React.Component {
+export default class BaseView extends React.Component {
     constructor(props) {
         super(props);
     }
 
     updateSourceItem(sourceName, key, childKey, value) {
-        let _dataSource = this.props.dataSource[sourceName];
-        // dataSource.update(sourceName, key, childKey, value);
-        console.log('updateSourceItem', _dataSource);
+        dataSource.update(sourceName, key, childKey, value);
+        console.log('updateSourceItem', dataSource);
     }
 
     getListDataFromSource(sourceName, list) {
-        let _dataSource = this.props.dataSource[sourceName];
-        console.log('dataSource', _dataSource);
+        console.log('dataSource', dataSource);
         let arr = list.map(item => {
-            return _dataSource[item];
+            return dataSource.sourceAll[sourceName][item];
         });
         return arr;
     }
 
     getSourceItem(sourceName, key, childKey) {
-        let _dataSource = this.props.dataSource[sourceName];
-        if (_dataSource[key] && childKey) {
-            return _dataSource[key][childKey];
+        if (!dataSource.sourceAll[sourceName][key]) {
+            dataSource.sourceAll[sourceName][key] = {};
         }
-        return _dataSource[key] || {};
+        if (childKey) {
+            return dataSource.sourceAll[sourceName][key][childKey];
+        }
+        return dataSource.sourceAll[sourceName][key];
     }
 }
-
-export default connect(
-    state => ({
-        dataSource: state.dataSource
-    }),
-    dispatch => ({})
-)(BaseView);
