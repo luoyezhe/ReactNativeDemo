@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import account from './account';
+// import account from './account';
 import bulletin from './bulletin';
+import dataSource from './dataSource';
 
 const initReducer = combineReducers({
-    account,
-    bulletin
+    // account,
+    bulletin,
+    dataSource
 });
 
 export default initReducer;

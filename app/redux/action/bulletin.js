@@ -2,7 +2,9 @@ import api from '@app/api/bulletin';
 import {
     BULLETIN_LIST,
     BULLETIN_COLLECT,
-    BULLETIN_UN_COLLECT
+    BULLETIN_UN_COLLECT,
+    ADD_DATASOURCE,
+    UPDATE_DATASOURCE
 } from '../ActionTypes';
 
 export const getBulletinList = (params, success, fail) => {
@@ -11,9 +13,15 @@ export const getBulletinList = (params, success, fail) => {
             .getList(params)
             .then(res => {
                 dispatch({
+                    type: ADD_DATASOURCE,
+                    module: 'bulletin',
+                    key: 'info_uuid',
+                    value: res.results
+                });
+                dispatch({
                     type: BULLETIN_LIST,
                     res: res,
-                    page: params.page + 1
+                    page: params.page
                 });
                 success && success(res);
             })
@@ -29,9 +37,11 @@ export const bulletinCollect = (data, success, fail) => {
             .bulletinCollect(data)
             .then(res => {
                 dispatch({
-                    type: BULLETIN_COLLECT,
-                    res: res,
-                    info_uuid: data.info_uuid
+                    type: UPDATE_DATASOURCE,
+                    module: 'bulletin',
+                    key: data.info_uuid,
+                    childKey: 'collect_id',
+                    value: res.collect_id
                 });
                 success && success(res);
             })

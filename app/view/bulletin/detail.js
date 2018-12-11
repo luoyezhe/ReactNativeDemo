@@ -76,7 +76,7 @@ class BulletinDetail extends BaseView {
         api.getDetail(id)
             .then(res => {
                 console.log('detail', res);
-                super.updateSourceItem('bulletin', id, 'detail', res);
+                // super.updateSourceItem('bulletin', id, 'detail', res);
                 this.setState({
                     detail: super.getSourceItem('bulletin', id, 'detail')
                 });
