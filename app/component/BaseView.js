@@ -8,6 +8,7 @@ import React, { Component, StyleSheet } from 'react';
 * */
 import showToast from '@app/utils/toast';
 import { dataSource } from '@app/redux/reducer/dataSource';
+import store from '@app/redux/index.js';
 
 export default class BaseView extends React.Component {
     constructor(props) {
@@ -15,25 +16,26 @@ export default class BaseView extends React.Component {
     }
 
     updateSourceItem(sourceName, key, childKey, value) {
-        dataSource.update(sourceName, key, childKey, value);
-        console.log('updateSourceItem', dataSource);
+        // const state = store.getState();
+        // dataSource.update(sourceName, key, childKey, value);
+        // console.log('updateSourceItem', dataSource);
     }
 
-    getListDataFromSource(sourceName, list) {
-        console.log('dataSource', dataSource);
+    getListDataFromSource(module, list) {
+        const state = store.getState();
+        console.log('getListDataFromSource', state)
         let arr = list.map(item => {
-            return dataSource.sourceAll[sourceName][item];
+            return state.dataBase[module][item];
         });
         return arr;
     }
 
-    getSourceItem(sourceName, key, childKey) {
-        if (!dataSource.sourceAll[sourceName][key]) {
-            dataSource.sourceAll[sourceName][key] = {};
+    getSourceItem(module, key, childKey) {
+        const state = store.getState();
+        console.log('getSourceItem', state)
+        if (state.dataBase[module][key] && childKey) {
+            return state.dataBase[module][key][childKey];
         }
-        if (childKey) {
-            return dataSource.sourceAll[sourceName][key][childKey];
-        }
-        return dataSource.sourceAll[sourceName][key];
+        return state.dataBase[module][key] || {};
     }
 }

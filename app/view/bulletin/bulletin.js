@@ -56,7 +56,7 @@ class Bulletin extends BaseView {
         console.log('============loadMore==============');
         let { bulletinAction } = this.props;
         let params = {
-            page: this.props.page
+            page: this.props.page + 1
         };
         bulletinAction.getBulletinList(
             params,

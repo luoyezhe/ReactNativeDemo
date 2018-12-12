@@ -1,8 +1,9 @@
 import api from '@app/api/bulletin';
 import {
     BULLETIN_LIST,
-    BULLETIN_COLLECT,
-    BULLETIN_UN_COLLECT
+    ADD_DATABASE,
+    UPDATE_DATABASE,
+    UPDATE_DATABASE_COLLECT
 } from '../ActionTypes';
 
 export const getBulletinList = (params, success, fail) => {
@@ -11,9 +12,35 @@ export const getBulletinList = (params, success, fail) => {
             .getList(params)
             .then(res => {
                 dispatch({
+                    type: ADD_DATABASE,
+                    module: 'bulletin',
+                    key: 'info_uuid',
+                    value: res.results
+                });
+                dispatch({
                     type: BULLETIN_LIST,
                     res: res,
-                    page: params.page + 1
+                    page: params.page
+                });
+                success && success(res);
+            })
+            .cache(error => {
+                fail && fail(error);
+            });
+    };
+};
+
+export const getBulletinDetail = (id, success, fail) => {
+    return async (dispatch, getState) => {
+        return await api
+            .getDetail(id)
+            .then(res => {
+                dispatch({
+                    type: UPDATE_DATABASE,
+                    module: 'bulletin',
+                    key: id,
+                    childKey: 'detail',
+                    value: res
                 });
                 success && success(res);
             })
@@ -29,9 +56,11 @@ export const bulletinCollect = (data, success, fail) => {
             .bulletinCollect(data)
             .then(res => {
                 dispatch({
-                    type: BULLETIN_COLLECT,
-                    res: res,
-                    info_uuid: data.info_uuid
+                    type: UPDATE_DATABASE_COLLECT,
+                    module: 'bulletin',
+                    key: data.info_uuid,
+                    childKey: 'collect_id',
+                    value: res.collect_id
                 });
                 success && success(res);
             })
@@ -47,9 +76,11 @@ export const bulletinUnCollect = ({ id, info_uuid }, success, fail) => {
             .bulletinUnCollect(id)
             .then(res => {
                 dispatch({
-                    type: BULLETIN_UN_COLLECT,
-                    res: res,
-                    info_uuid: info_uuid
+                    type: UPDATE_DATABASE_COLLECT,
+                    module: 'bulletin',
+                    key: info_uuid,
+                    childKey: 'collect_id',
+                    value: null
                 });
                 success && success(res);
             })

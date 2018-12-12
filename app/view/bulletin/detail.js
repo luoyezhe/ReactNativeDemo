@@ -36,6 +36,7 @@ class BulletinDetail extends BaseView {
     }
 
     collectAction() {
+        console.log('detail-state', this.state)
         let { bulletinAction } = this.props;
         if (!this.state.detail.collect_id) {
             // 收藏
@@ -72,18 +73,30 @@ class BulletinDetail extends BaseView {
     }
 
     getDetail() {
-        let { id } = this.props;
-        api.getDetail(id)
-            .then(res => {
+        let { id, bulletinAction } = this.props;
+        bulletinAction.getBulletinDetail(
+            id,
+            res => {
                 console.log('detail', res);
-                super.updateSourceItem('bulletin', id, 'detail', res);
                 this.setState({
-                    detail: super.getSourceItem('bulletin', id, 'detail')
+                    detail: res
                 });
-            })
-            .catch(() => {
-                // showToast(error);
-            });
+            },
+            error => {
+                super.showToast(error);
+            }
+        );
+        // api.getDetail(id)
+        //     .then(res => {
+        //         console.log('detail', res);
+        //         // super.updateSourceItem('bulletin', id, 'detail', res);
+        //         this.setState({
+        //             detail: super.getSourceItem('bulletin', id, 'detail')
+        //         });
+        //     })
+        //     .catch(() => {
+        //         // showToast(error);
+        //     });
     }
 }
 
