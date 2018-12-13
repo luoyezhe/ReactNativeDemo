@@ -1,4 +1,4 @@
-import showToast from '../utils/toast';
+import showToast from '../component/common/toast';
 import { stringifyParams } from '../utils/Utils';
 import Urls from './Urls';
 import storage from '@app/storage/DeviceStorage.js';

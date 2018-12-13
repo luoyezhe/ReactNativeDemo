@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
+import dataBase from './dataBase';
 import account from './account';
 import bulletin from './bulletin';
-import dataBase from './dataBase';
+import collect from './collect';
 
 const initReducer = combineReducers({
+    dataBase,
     account,
     bulletin,
-    dataBase
+    collect
 });
 
 export default initReducer;

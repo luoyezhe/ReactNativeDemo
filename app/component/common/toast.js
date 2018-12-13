@@ -13,4 +13,12 @@ const showToast = message => {
         delay: 0
     });
 };
-export default showToast;
+
+const hideToast = toast => {
+    Toast.hide(toast);
+};
+
+export default {
+    showToast,
+    hideToast
+};

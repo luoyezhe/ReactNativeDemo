@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import {
     Text,
-    View,
     StyleSheet,
     Button,
     Image,
@@ -10,11 +10,8 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-import BaseView from '@app/component/BaseView';
-import Main from '@app/view/main/main.js';
-
 // 我的
-export default class Mine extends BaseView {
+export default class PersonInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +19,6 @@ export default class Mine extends BaseView {
             videoSource: null
         };
         this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
-        this.selectVideoTapped = this.selectVideoTapped.bind(this);
     }
 
     selectPhotoTapped() {
@@ -60,48 +56,15 @@ export default class Mine extends BaseView {
         });
     }
 
-    selectVideoTapped() {
-        const options = {
-            title: 'Video Picker',
-            takePhotoButtonTitle: 'Take Video...',
-            mediaType: 'video',
-            videoQuality: 'medium'
-        };
-
-        ImagePicker.showImagePicker(options, response => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled video picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log(
-                    'User tapped custom button: ',
-                    response.customButton
-                );
-            } else {
-                this.setState({
-                    videoSource: response.uri
-                });
-            }
-        });
-    }
-
     render() {
         return (
-            <Main>
+            <View>
                 <View style={styles.container}>
                     <TouchableOpacity
                         onPress={this.selectPhotoTapped.bind(this)}>
-                        <View
-                            style={[
-                                styles.avatar,
-                                styles.avatarContainer,
-                                { marginBottom: 20 }
-                            ]}>
+                        <View style={[styles.avatar, styles.avatarContainer]}>
                             {this.state.avatarSource === null ? (
-                                <Text>Select a Photo</Text>
+                                <Text>选择头像</Text>
                             ) : (
                                 <Image
                                     style={styles.avatar}
@@ -110,31 +73,26 @@ export default class Mine extends BaseView {
                             )}
                         </View>
                     </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={this.selectVideoTapped.bind(this)}>
-                        <View style={[styles.avatar, styles.avatarContainer]}>
-                            <Text>Select a Video</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    {this.state.videoSource && (
-                        <Text style={{ margin: 8, textAlign: 'center' }}>
-                            {this.state.videoSource}
+                    <View style={styles.info}>
+                        <Text>姓名：王哲</Text>
+                        <Text style={styles.cellphone}>
+                            手机号：18518572248
                         </Text>
-                    )}
+                    </View>
                 </View>
-            </Main>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'row',
+        height: 100,
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        padding: 20,
+        backgroundColor: '#fff'
     },
     avatarContainer: {
         borderColor: '#9B9B9B',
@@ -143,8 +101,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     avatar: {
-        borderRadius: 75,
-        width: 150,
-        height: 150
+        width: 75,
+        height: 75
+    },
+    info: {
+        paddingLeft: 15
+    },
+    cellphone: {
+        paddingTop: 10
     }
 });

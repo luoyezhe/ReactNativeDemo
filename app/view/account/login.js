@@ -64,9 +64,8 @@ export default class Login extends BaseView {
             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6InBia2RmMl9zaGEyNTYkMzAwMDAkSDRVYW5CR2lYbFlTJDFLRG9YdkNsZGVGQUJ0UlBaQUhiY3RmOHYvTkcyV21YSWo2bUltbGpYdjA9IiwidXNlcl9pZCI6MTQ4NzIsInBsYXRmb3JtIjoicGMifQ.oXxkhvYmhzc5vafIai8NKTGuqNAfS9XmFszt4tD-xsI'
         );
         storage.save('username', '18518572248');
-
-        Actions.bulletinHome();
-
+        Actions.reset('root');
+        // Actions.home();
         // showToast('submit');
         // let data = {
         // 		cellphone: this.state.name,

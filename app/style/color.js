@@ -1,6 +1,7 @@
 const app = {
     background: '#EEEEEE',
-    cardBackground: '#FFFFFF'
+    cardBackground: '#FFFFFF',
+    primaryColor: '#19192d'
 };
 
 const brand = {
@@ -9,10 +10,6 @@ const brand = {
         secondary: '#262626',
         black: '#000'
     }
-};
-
-const list = {
-    primaryColor: '#24292e'
 };
 
 const text = {
@@ -28,6 +25,5 @@ const text = {
 export default {
     ...app,
     ...brand,
-    ...list,
     ...text
 };

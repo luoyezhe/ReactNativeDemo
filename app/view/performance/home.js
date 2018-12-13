@@ -1,11 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Container, Content, Footer, FooterTab, Button } from 'native-base';
-
 import BaseView from '@app/component/BaseView';
 
-// 招投标Home
-export default class BulletinHome extends BaseView {
+export default class PerformanceHome extends BaseView {
     constructor(props) {
         super(props);
     }
@@ -13,7 +10,7 @@ export default class BulletinHome extends BaseView {
     render() {
         return (
             <View>
-                <Text>招投标</Text>
+                <Text>业绩库</Text>
             </View>
         );
     }

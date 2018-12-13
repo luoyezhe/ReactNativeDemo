@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
         shadowRadius: null
     },
     navigationBar: {
-        // backgroundColor: constant.primaryColor,
-        paddingTop: StatusBar.currentHeight
-        // height: navBarHeight,
+        backgroundColor: colors.primaryColor,
+        paddingTop: StatusBar.currentHeight,
+        height: sizes.navbarHeight
     },
     centered: {
         justifyContent: 'center',
