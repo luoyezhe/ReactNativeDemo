@@ -1,5 +1,5 @@
 import Urls from '../api/Urls';
-import { stringifyParams } from '../utils/Utils';
+import { stringifyParams } from '../utils/utils';
 
 export const Fetch = (url, method, params) => {
     const header = new Headers({

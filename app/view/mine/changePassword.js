@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Container, Content, Form, Item, Input, Label } from 'native-base';
+import { View, StyleSheet } from 'react-native';
+import {
+    Container,
+    Content,
+    Form,
+    Item,
+    Input,
+    Text,
+    Button,
+    Label
+} from 'native-base';
+import { AppSizes } from '@app/style';
+import api from '@app/api/account';
+import Toast from '@app/component/common/toast.js';
 
 export default class ChangePassword extends React.Component {
     constructor(props) {
@@ -10,6 +22,41 @@ export default class ChangePassword extends React.Component {
             newPass: '',
             checkPass: ''
         };
+        this.submitForm = this.submitForm.bind(this);
+        this.validForm = this.validForm.bind(this);
+    }
+
+    validForm() {
+        let msg = '';
+        if (this.state.newPass !== this.state.checkPass) {
+            msg = '新密码和确认密码要相同';
+        }
+        if (msg) {
+            Toast.showToast(msg);
+            return false;
+        }
+        return true;
+    }
+
+    // 确定修改密码
+    submitForm() {
+        let isValid = this.validForm();
+        if (!isValid) {
+            return;
+        }
+        console.log('submitForm');
+        let data = {
+            old_password: this.state.oldPass,
+            password: this.state.newPass
+        };
+        api.changePassword(data)
+            .then(res => {
+                Toast.showToast('修改成功');
+            })
+            .catch(error => {
+                console.log(error);
+                Toast.showToast(error.data.message);
+            });
     }
 
     render() {
@@ -45,8 +92,25 @@ export default class ChangePassword extends React.Component {
                             />
                         </Item>
                     </Form>
+                    <Button
+                        style={styles.btn}
+                        onPress={() => {
+                            this.submitForm();
+                        }}>
+                        <Text>确定</Text>
+                    </Button>
                 </Content>
             </Container>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    btn: {
+        flex: 1,
+        margin: 15,
+        marginTop: 30,
+        justifyContent: 'center',
+        width: AppSizes.screen.width - 30
+    }
+});

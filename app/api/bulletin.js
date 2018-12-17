@@ -14,6 +14,9 @@ const bulletin = {
     },
     bulletinUnCollect(id) {
         return api.delete(`/v1/api/bulletin_collect/${id}/`);
+    },
+    getHotList() {
+        return api.get(`/v1/api/bulletin/`);
     }
 };
 

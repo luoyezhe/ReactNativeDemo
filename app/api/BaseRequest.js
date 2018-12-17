@@ -1,5 +1,5 @@
 import showToast from '../component/common/toast';
-import { stringifyParams } from '../utils/Utils';
+import { stringifyParams } from '../utils/utils';
 import Urls from './Urls';
 import storage from '@app/storage/DeviceStorage.js';
 import { BASE_URL } from '@app/config.js';
