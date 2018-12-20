@@ -35,13 +35,13 @@ export const getBulletinDetail = (id, success, fail) => {
         return await api
             .getDetail(id)
             .then(res => {
-                dispatch({
-                    type: UPDATE_DATABASE,
-                    module: 'bulletin',
-                    key: id,
-                    childKey: 'detail',
-                    value: res
-                });
+                // dispatch({
+                //     type: UPDATE_DATABASE,
+                //     module: 'bulletin',
+                //     key: id,
+                //     childKey: 'detail',
+                //     value: res
+                // });
                 success && success(res);
             })
             .cache(error => {

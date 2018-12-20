@@ -10,8 +10,7 @@ export default class Main extends React.Component {
     }
     render() {
         return (
-            <View>
-                <Text>易众标11111</Text>
+            <View style={{ flex: 1 }}>
                 <HotBulletin />
             </View>
         );

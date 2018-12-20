@@ -8,20 +8,17 @@ import {
     StyleSheet
 } from 'react-native';
 
-import { Spinner } from 'native-base';
-
 import { Actions } from 'react-native-router-flux';
-// import { BulletinItem, Toast } from '@app/component';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as performanceActions from '@app/redux/action/performance.js';
 import BulletinItem from '@app/component/bulletin/listItem.js';
 import PullListView from '@app/component/common/PullLoadMoreListView';
 import Toast from '@app/component/common/toast.js';
-import RefreshListView, {
-    RefreshState
-} from '@app/component/RefreshListView.js';
 
-import api from '@app/api/bulletin';
-
-export default class HotBulletin extends React.Component {
+class DynamicList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,9 +26,13 @@ export default class HotBulletin extends React.Component {
         };
         this.renderRow = this.renderRow.bind(this);
         this.refresh = this.refresh.bind(this);
+        this.loadMore = this.loadMore.bind(this);
         this.refreshData = this.refreshData.bind(this);
     }
     componentDidMount() {
+        if (this.props.dataSource && this.props.dataSource.length > 0) {
+            return;
+        }
         InteractionManager.runAfterInteractions(() => {
             this.refreshData();
         });
@@ -43,16 +44,39 @@ export default class HotBulletin extends React.Component {
         this.refresh();
     }
     refresh() {
-        api.getHotList()
-            .then(res => {
+        let { performanceAction, id } = this.props;
+        let params = {
+            page: 1
+        };
+        performanceAction.getDynamicList(
+            { id, params },
+            () => {
                 this.pullList.refreshComplete(false);
-                this.setState({
-                    list: res.results
-                });
-            })
-            .catch(error => {
+            },
+            error => {
+                this.pullList.refreshComplete(false);
                 Toast.showToast(error.data.message);
-            });
+            }
+        );
+    }
+    loadMore() {
+        console.log('============loadMore==============');
+        let { performanceAction, id } = this.props;
+        let params = {
+            page: this.props.page + 1
+        };
+        performanceAction.getDynamicList(
+            {
+                id,
+                params
+            },
+            res => {
+                this.pullList.loadMoreComplete(this.props.hasNext);
+            },
+            error => {
+                this.pullList.loadMoreComplete(this.props.hasNext);
+            }
+        );
     }
 
     renderRow(rowData) {
@@ -69,6 +93,7 @@ export default class HotBulletin extends React.Component {
     }
 
     render() {
+        let { dataSource } = this.props;
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
@@ -77,7 +102,6 @@ export default class HotBulletin extends React.Component {
                     translucent
                     barStyle={'light-content'}
                 />
-                <Text style={styles.header}>热门推荐</Text>
                 <PullListView
                     style={{ flex: 1 }}
                     ref={ref => {
@@ -85,13 +109,24 @@ export default class HotBulletin extends React.Component {
                     }}
                     renderItem={(rowData, index) => this.renderRow(rowData)}
                     refresh={this.refresh}
-                    data={this.state.list}
-                    showListFooter={false}
+                    loadMore={this.loadMore}
+                    data={dataSource}
                 />
             </View>
         );
     }
 }
+
+export default connect(
+    state => ({
+        dataSource: state.performance.dynamicList.data,
+        page: state.performance.dynamicList.page,
+        hasNext: state.performance.dynamicList.next
+    }),
+    dispatch => ({
+        performanceAction: bindActionCreators(performanceActions, dispatch)
+    })
+)(DynamicList);
 
 const styles = StyleSheet.create({
     header: {

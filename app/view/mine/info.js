@@ -8,17 +8,42 @@ import {
     TouchableOpacity,
     PixelRatio
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ImagePicker from 'react-native-image-picker';
 
+import * as mineActions from '@app/redux/action/mine.js';
+import api from '@app/api/api.js';
+import mineApi from '@app/api/mine.js';
+import Toast from '@app/component/common/toast';
+
 // 我的
-export default class PersonInfo extends React.Component {
+class PersonInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatarSource: null,
-            videoSource: null
+            userInfo: {},
+            avatarSource: null
         };
         this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+        this.getUserInfo = this.getUserInfo.bind(this);
+    }
+    componentDidMount() {
+        this.getUserInfo();
+    }
+
+    getUserInfo() {
+        let { mineAction } = this.props;
+        mineAction.getUserInfo(
+            res => {
+                this.setState({
+                    userInfo: res
+                });
+            },
+            error => {
+                Toast.showToast(error.data.message);
+            }
+        );
     }
 
     selectPhotoTapped() {
@@ -47,36 +72,60 @@ export default class PersonInfo extends React.Component {
                 let source = { uri: response.uri };
 
                 // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                this.setState({
-                    avatarSource: source
-                });
+                let service = '/v1/api/user/upload_image/';
+                let config = {
+                    timeout: 6000,
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                };
+                let formData = new FormData();
+                formData.append('file', source);
+                api.post(service, formData, config)
+                    .then(res => {
+                        this.setState({
+                            userInfo: Object.assign({}, this.state.userInfo, {
+                                head_img_url: res.url
+                            })
+                        });
+                    })
+                    .catch(error => {
+                        Toast.showToast(error.data.message);
+                    });
+                // this.setState({
+                //     avatarSource: source
+                // });
             }
         });
     }
 
     render() {
+        let { userInfo } = this.state;
         return (
             <View>
                 <View style={styles.container}>
                     <TouchableOpacity
                         onPress={this.selectPhotoTapped.bind(this)}>
                         <View style={[styles.avatar, styles.avatarContainer]}>
-                            {this.state.avatarSource === null ? (
+                            {userInfo.head_img_url === null ? (
                                 <Text>选择头像</Text>
                             ) : (
                                 <Image
                                     style={styles.avatar}
-                                    source={this.state.avatarSource}
+                                    source={{
+                                        uri: this.state.userInfo.head_img_url
+                                    }}
                                 />
                             )}
                         </View>
                     </TouchableOpacity>
                     <View style={styles.info}>
-                        <Text>姓名：王哲</Text>
+                        <Text>姓名：{userInfo.name}</Text>
                         <Text style={styles.cellphone}>
-                            手机号：18518572248
+                            手机号：{userInfo.cellphone}
+                        </Text>
+                        <Text style={styles.cellphone}>
+                            性别：{userInfo.sex}
                         </Text>
                     </View>
                 </View>
@@ -84,6 +133,14 @@ export default class PersonInfo extends React.Component {
         );
     }
 }
+export default connect(
+    state => ({
+        // userInfo: state.mine.userInfo
+    }),
+    dispatch => ({
+        mineAction: bindActionCreators(mineActions, dispatch)
+    })
+)(PersonInfo);
 
 const styles = StyleSheet.create({
     container: {

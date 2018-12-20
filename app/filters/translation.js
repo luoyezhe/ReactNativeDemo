@@ -1,7 +1,7 @@
 import * as dict from '@app/constant/common.js';
 const translation = (code, dictName, separate = ',') => {
-    console.log('code', code);
-    console.log('dictName', dictName);
+    // console.log('code', code);
+    // console.log('dictName', dictName);
     if (!code) {
         return '';
     }

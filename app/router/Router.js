@@ -12,14 +12,18 @@ import Home from '@app/view/home/home.js';
 import MainHome from '@app/view/main/home.js';
 // 招投标
 import BulletinHome from '@app/view/bulletin/home.js';
+import BulletinDetail from '@app/view/bulletin/detail.js';
 // 业绩库
 import PerformanceHome from '@app/view/performance/home.js';
+import PerformanceDetail from '@app/view/performance/detail.js';
 // 我的
 import MineHome from '@app/view/mine/home.js';
 // 收藏列表
 import CollectList from '@app/view/mine/collect.js';
 // 修改密码
 import ChangePassword from '@app/view/mine/changePassword.js';
+// loading
+import LoadingModal from '@app/component/common/LoadingModal';
 
 import Test from '@app/view/test/test.js';
 
@@ -64,6 +68,18 @@ const router = () => {
                             />
                         </Scene>
                         <Scene
+                            title="详情"
+                            key="bulletinDetail"
+                            component={BulletinDetail}
+                            back={true}
+                        />
+                        <Scene
+                            title="详情"
+                            key="performanceDetail"
+                            component={PerformanceDetail}
+                            back={true}
+                        />
+                        <Scene
                             title="收藏"
                             key="collect"
                             component={CollectList}
@@ -82,6 +98,7 @@ const router = () => {
                             hideNavBar
                         />
                     </Scene>
+                    <Scene key="LoadingModal" component={LoadingModal} />
                 </Stack>
             </Router>
         </Provider>

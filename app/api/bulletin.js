@@ -17,6 +17,9 @@ const bulletin = {
     },
     getHotList() {
         return api.get(`/v1/api/bulletin/`);
+    },
+    getBulletinContent(id) {
+        return api.get(`/v1/api/bulletin/${id}/content/`);
     }
 };
 

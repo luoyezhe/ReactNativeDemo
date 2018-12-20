@@ -22,4 +22,13 @@ export const BULLETIN_COLLECT = 'BULLETIN_COLLECT';
 export const BULLETIN_UN_COLLECT = 'BULLETIN_UN_COLLECT';
 
 // 收藏列表
-export const COLLECT_LIST = 'COLLECT_LIST'
+export const COLLECT_LIST = 'COLLECT_LIST';
+
+// 用户
+export const USER_INFO = 'USER_INFO';
+
+// 企业信息
+export const PERFORMANCE_LIST = 'PERFORMANCE_LIST';
+export const PERFORMANCE_DETAIL = 'PERFORMANCE_DETAIL';
+export const BUSINESS_INFO = 'BUSINESS_INFO';
+export const DYNAMIC_LIST = 'DYNAMIC_LIST';

@@ -35,6 +35,9 @@ class PullLoadMoreListView extends React.Component {
      * 绘制load more footer
      * */
     renderFooter() {
+        if (!this.props.showListFooter) {
+            return <View />;
+        }
         let footer = this.state.showLoadMore ? (
             <View
                 style={{
@@ -65,7 +68,7 @@ class PullLoadMoreListView extends React.Component {
                         color: 'black',
                         margin: AppSizes.normalMarginEdge
                     }}>
-                    {this.props.dataSource.length > 0 ? 'loadMoreEnd' : ' '}
+                    {this.props.data.length > 0 ? 'loadMoreEnd' : ' '}
                 </Text>
             </View>
         );
@@ -100,7 +103,7 @@ class PullLoadMoreListView extends React.Component {
         if (!this.state.showLoadMore) {
             return;
         }
-        if (this.props.dataSource.length === 0) {
+        if (this.props.data.length === 0) {
             return;
         }
         this.setState({
@@ -152,23 +155,26 @@ class PullLoadMoreListView extends React.Component {
                 ListEmptyComponent={this.renderEmpty()}
                 removeClippedSubviews={true}
                 {...refreshProps}
-                onLayout={e =>
-                    this.setState({ listHeight: e.nativeEvent.layout.height })
-                }
+                onLayout={e => {
+                    let _height = e.nativeEvent.layout.height;
+                    if (this.state.listHeight < _height) {
+                        this.setState({ listHeight: _height });
+                    }
+                }}
                 renderItem={({ item, index }) =>
-                    this.props.renderRow(item, index)
+                    this.props.renderItem(item, index)
                 }
                 ListHeaderComponent={this.props.renderHeader}
                 ItemSeparatorComponent={({ highlighted }) => <View />}
                 enableEmptySections
                 initialListSize={this.props.pageSize}
                 pageSize={this.props.pageSize}
-                initialNumToRender={PAGE_SIZE}
+                initialNumToRender={10}
                 onEndReachedThreshold={0.1}
                 keyExtractor={(item, index) => index.toString()}
                 onEndReached={() => this.loadMore()}
                 ListFooterComponent={this.renderFooter}
-                data={this.props.dataSource}
+                data={this.props.data}
             />
         );
     }
@@ -180,7 +186,7 @@ class PullLoadMoreListView extends React.Component {
     }
 
     scrollToTop() {
-        if (this.props.dataSource <= 0) {
+        if (this.props.data <= 0) {
             return;
         }
         if (this.list) {
@@ -211,15 +217,17 @@ class PullLoadMoreListView extends React.Component {
 
 PullLoadMoreListView.propTypes = {
     pageSize: PropTypes.number,
-    dataSource: PropTypes.any,
+    data: PropTypes.any,
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
-    enableRefresh: PropTypes.bool
+    enableRefresh: PropTypes.bool,
+    showListFooter: PropTypes.bool
 };
 PullLoadMoreListView.defaultProps = {
     pageSize: PAGE_SIZE,
-    dataSource: [],
-    enableRefresh: true
+    data: [],
+    enableRefresh: true,
+    showListFooter: true
 };
 
 export default PullLoadMoreListView;

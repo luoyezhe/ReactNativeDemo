@@ -25,5 +25,6 @@ export default {
     padding: 20,
     normalMarginEdge: 10,
 
-    normalTextSize: 14
+    normalTextSize: 16,
+    smallTextSize: 14
 };

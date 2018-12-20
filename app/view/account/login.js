@@ -36,7 +36,7 @@ export default class Login extends BaseView {
                 <Button
                     title="登录"
                     buttonStyle={{ marginTop: 10 }}
-                    backgroundColor={AppColors.brand.primary}
+                    backgroundColor={AppColors.btnPrimary}
                     onPress={this.onSubmit.bind(this)}
                 />
             </View>
@@ -65,6 +65,8 @@ export default class Login extends BaseView {
         );
         storage.save('username', '18518572248');
         Actions.reset('root');
+        // Actions.bulletinOther();
+        // Actions.reset('bulltinOther');
         // Actions.home();
         // showToast('submit');
         // let data = {

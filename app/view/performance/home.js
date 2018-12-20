@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import BaseView from '@app/component/BaseView';
+import PerformanceList from './performanceList';
 
-export default class PerformanceHome extends BaseView {
+export default class PerformanceHome extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            <View>
-                <Text>业绩库</Text>
+            <View style={{ flex: 1 }}>
+                <PerformanceList />
             </View>
         );
     }

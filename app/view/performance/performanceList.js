@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    FlatList,
     InteractionManager,
     StatusBar,
     StyleSheet
@@ -12,16 +11,14 @@ import { Spinner } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
 // import { BulletinItem, Toast } from '@app/component';
-import BulletinItem from '@app/component/bulletin/listItem.js';
+import ListItem from './child/listItem';
 import PullListView from '@app/component/common/PullLoadMoreListView';
 import Toast from '@app/component/common/toast.js';
-import RefreshListView, {
-    RefreshState
-} from '@app/component/RefreshListView.js';
 
-import api from '@app/api/bulletin';
+import api from '@app/api/performance';
 
-export default class HotBulletin extends React.Component {
+// 企业业绩查询-列表
+export default class PerformanceList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,11 +40,11 @@ export default class HotBulletin extends React.Component {
         this.refresh();
     }
     refresh() {
-        api.getHotList()
+        api.getList()
             .then(res => {
                 this.pullList.refreshComplete(false);
                 this.setState({
-                    list: res.results
+                    list: res
                 });
             })
             .catch(error => {
@@ -58,11 +55,11 @@ export default class HotBulletin extends React.Component {
     renderRow(rowData) {
         // console.log('rowData', rowData.title);
         return (
-            <BulletinItem
+            <ListItem
                 item={rowData}
                 onPressItem={() => {
                     console.log('to detail');
-                    Actions.bulletinDetail({ id: rowData.info_uuid });
+                    Actions.performanceDetail({ id: rowData.org_uuid });
                 }}
             />
         );
@@ -77,7 +74,7 @@ export default class HotBulletin extends React.Component {
                     translucent
                     barStyle={'light-content'}
                 />
-                <Text style={styles.header}>热门推荐</Text>
+                <Text style={styles.header}>热门企业</Text>
                 <PullListView
                     style={{ flex: 1 }}
                     ref={ref => {

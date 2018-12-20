@@ -6,6 +6,7 @@ import {
     Platform,
     InteractionManager
 } from 'react-native';
+import { Content } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions } from 'react-native-router-flux';
@@ -69,6 +70,7 @@ class Bulletin extends BaseView {
         );
     }
     renderRow(rowData) {
+        // console.log('rowData', rowData.title);
         return (
             <BulletinItem
                 item={rowData}
@@ -98,10 +100,10 @@ class Bulletin extends BaseView {
                     ref={ref => {
                         this.pullList = ref;
                     }}
-                    renderRow={(rowData, index) => this.renderRow(rowData)}
+                    renderItem={(rowData, index) => this.renderRow(rowData)}
                     refresh={this.refresh}
                     loadMore={this.loadMore}
-                    dataSource={dataSource}
+                    data={dataSource}
                 />
             </View>
         );

@@ -1,12 +1,12 @@
 import React, { Component, PureComponent } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { Card, CardItem, Text, Body } from 'native-base';
+import { Card, CardItem, Text, Body, Right, Left } from 'native-base';
 
 import { AppStyles } from '@app/style';
-import Filters from '@app/filters';
+import translation from '@app/filters/translation';
 
-class BulletinItem extends PureComponent {
+class BulletinItem extends React.Component {
     constructor(props) {
         super(props);
         this.getTrendName = this.getTrendName.bind(this);
@@ -23,8 +23,17 @@ class BulletinItem extends PureComponent {
         return msg;
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.item.info_uuid === this.props.item.info_uuid) {
+            return false;
+        }
+        // console.log(this.props.item.title);
+        return true;
+    }
+
     render() {
         let { item } = this.props;
+        console.log(item.title);
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -38,22 +47,28 @@ class BulletinItem extends PureComponent {
                     <CardItem>
                         <Body style={styles.cardContent}>
                             <Text>
-                                {Filters.translation(
-                                    item.method,
-                                    'bulletinMethods'
-                                )}
+                                {translation(item.method, 'bulletinMethods')}
                             </Text>
                             <Text> | </Text>
                             <Text
                                 numberOfLines={1}
                                 ellipsizeMode="tail"
-                                style={{ width: 220 }}>
+                                style={{ width: 240 }}>
                                 {this.getTrendName(item.related_orgs)}
                             </Text>
                         </Body>
                     </CardItem>
                     <CardItem footer>
-                        <Text>底部</Text>
+                        <Left>
+                            <Text>
+                                {translation(item.location, 'locationAll')}
+                            </Text>
+                        </Left>
+                        <Right>
+                            <Text style={{ marginRight: 0 }}>
+                                {item.release_date}
+                            </Text>
+                        </Right>
                     </CardItem>
                 </Card>
             </TouchableOpacity>

@@ -37,7 +37,7 @@ export default class Register extends BaseView {
                 <Button
                     title="注册"
                     buttonStyle={{ marginTop: 10 }}
-                    backgroundColor={AppColors.brand.primary}
+                    backgroundColor={AppColors.btnPrimary}
                     onPress={this.onSubmit.bind(this)}
                 />
             </View>

@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { Container, Content, Footer, FooterTab, Button } from 'native-base';
+import {
+    Container,
+    Content,
+    Header,
+    Footer,
+    FooterTab,
+    Button
+} from 'native-base';
 
-import BaseView from '@app/component/BaseView';
+import Bulletin from './bulletin';
 
 // 招投标Home
-export default class BulletinHome extends BaseView {
+export default class BulletinHome extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            <View>
-                <Text>招投标</Text>
+            <View style={{ flex: 1 }}>
+                <Bulletin />
             </View>
         );
     }
