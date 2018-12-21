@@ -1,6 +1,5 @@
 import showToast from '../component/common/toast';
-import { stringifyParams } from '../utils/utils';
-import Urls from './Urls';
+// import { stringifyParams } from '../utils/utils';
 import storage from '@app/storage/DeviceStorage.js';
 import { BASE_URL } from '@app/config.js';
 
@@ -18,7 +17,7 @@ const Fetch = async (url, method, params) => {
         'Content-Type': 'application/json'
     };
     if (token) {
-        header['common'] = {
+        header.common = {
             Authorization: `Bearer ${token}`
         };
     }
@@ -29,31 +28,27 @@ const Fetch = async (url, method, params) => {
     };
     let toUrl = BASE_URL + url;
     if (method === 'get') {
-        const strParams = stringifyParams(params);
-        if (strParams) {
-            toUrl += '?' + strParams;
-        }
+        // const strParams = stringifyParams(params);
+        // if (strParams) {
+        //     toUrl += '?' + strParams;
+        // }
         delete options.body;
     } else {
         options.body = params;
     }
-    // if (user.token) {
-    //     options.headers.Authorization = `Token ${user.token}`;
-    // }
     console.log(toUrl);
     console.log(options);
-    return fetch(toUrl, options)
-        .then(response => {
-            return response.json();
-        })
-        .then(json => {
-            showToast(json.message);
-            return json;
-        })
-        .catch(error => {
-            showToast('网络错误');
-            console.warn(error);
-        });
+    return fetch(toUrl, options).then(response => {
+        return response.json();
+    });
+    // .then(json => {
+    //     showToast(json.message);
+    //     return json;
+    // })
+    // .catch(error => {
+    //     showToast('网络错误');
+    //     console.warn(error);
+    // });
 };
 
 export const postFetch = (url, params = {}) => {

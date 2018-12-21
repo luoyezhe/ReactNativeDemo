@@ -26,11 +26,11 @@ async function interceptors() {
     });
 
     api.interceptors.response.use(
-        function(response) {
+        response => {
             console.log(response);
             return response.data.data || response.data;
         },
-        function(error) {
+        error => {
             console.log(error.response);
             // if (error.response && error.response.data.error_code) {
             //

@@ -13,6 +13,7 @@ export const UPDATE_DATABASE_COLLECT = 'UPDATE_DATABASE_COLLECT'
 
 // login
 export const ACCOUNT_LOGIN = 'ACCOUNT_LOGIN';
+export const ACCOUNT_REGISTER = 'ACCOUNT_REGISTER';
 
 // bulletin
 export const BULLETIN_LIST = 'BULLETIN_LIST';

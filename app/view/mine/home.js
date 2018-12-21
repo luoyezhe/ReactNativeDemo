@@ -11,6 +11,7 @@ import { Actions } from 'react-native-router-flux';
 
 import Toast from '@app/component/common/toast.js';
 import PersonInfo from './info';
+import storage from '@app/storage/DeviceStorage.js';
 
 export default class MineHome extends React.Component {
     constructor(props) {
@@ -61,6 +62,7 @@ export default class MineHome extends React.Component {
             {
                 text: '确定',
                 onPress: () => {
+                    storage.delete('token');
                     Toast.showToast('退出成功');
                     Actions.reset('login');
                 }

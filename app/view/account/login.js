@@ -11,7 +11,6 @@ import storage from '@app/storage/DeviceStorage.js';
 
 import BaseView from '@app/component/BaseView';
 import { AppColors } from '@app/style';
-import api from '@app/api/account';
 import * as accountActions from '@app/redux/action/account';
 import Toast from '@app/component/common/toast';
 
@@ -19,8 +18,8 @@ class Login extends BaseView {
     constructor(props) {
         super(props);
         this.state = {
-            name: '18518572248',
-            password: 'Abcd1234'
+            name: '',
+            password: ''
         };
         this.valid = this.valid.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -63,7 +62,9 @@ class Login extends BaseView {
         );
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        storage.delete('token');
+    }
 
     onUsernameChange(text) {
         // this.props.usernameChanged(text);

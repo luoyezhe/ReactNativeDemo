@@ -1,84 +1,182 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Form, Item, Input, Label, Text, Button } from 'native-base';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { storage } from '@app/storage/index.js';
-
-import { View } from 'react-native';
-
-import {
-    Button,
-    FormLabel,
-    FormInput,
-    FormValidationMessage,
-    Text
-} from 'react-native-elements';
 
 import BaseView from '../../component/BaseView';
 import { AppColors } from '../../style';
-import api from '../../api/account';
-import { Actions } from 'react-native-router-flux';
+import * as accountActions from '@app/redux/action/account';
+import Toast from '@app/component/common/toast';
 
-export default class Register extends BaseView {
+class Register extends BaseView {
     constructor(props) {
         super(props);
         this.state = {
-            name: '18518572248',
-            password: '123456'
+            cellphone: '18518572248',
+            password: '',
+            checkPass: '',
+            captcha: ''
         };
+        this.getCode = this.getCode.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.backLogin = this.backLogin.bind(this);
     }
 
     render() {
         return (
-            <View>
-                <FormLabel>用户名</FormLabel>
-                <FormInput onChangeText={this.onUsernameChange.bind(this)} />
-
-                <FormLabel>密码</FormLabel>
-                <FormInput onChangeText={this.onPasswordChange.bind(this)} />
-                <Text />
+            <View style={[styles.container]}>
+                <Form>
+                    <Item floatingLabel>
+                        <Label>手机号</Label>
+                        <Input
+                            onChangeText={text => this.setState({ cellphone: text })}
+                            value={this.state.cellphone}
+                        />
+                    </Item>
+                    <Item style={[styles.codeContainer]}>
+                        <Item floatingLabel style={[styles.inputCodeContainer]}>
+                            <Label>验证码</Label>
+                            <Input
+                                onChangeText={text =>
+                                    this.setState({ captcha: text })
+                                }
+                                value={this.state.captcha}
+                            />
+                        </Item>
+                        <Button
+                            style={[styles.btnCodeContainer]}
+                            onPress={this.getCode}>
+                            <Text>获取验证码</Text>
+                        </Button>
+                    </Item>
+                    <Item floatingLabel>
+                        <Label>密码</Label>
+                        <Input
+                            onChangeText={text =>
+                                this.setState({ password: text })
+                            }
+                            value={this.state.password}
+                        />
+                    </Item>
+                    <Item floatingLabel>
+                        <Label>确认密码</Label>
+                        <Input
+                            onChangeText={text =>
+                                this.setState({ checkPass: text })
+                            }
+                            value={this.state.checkPass}
+                        />
+                    </Item>
+                    <Item />
+                </Form>
+                <Button full style={[styles.btnLogin]} onPress={this.onSubmit}>
+                    <Text>注册</Text>
+                </Button>
                 <Button
-                    title="注册"
-                    buttonStyle={{ marginTop: 10 }}
-                    backgroundColor={AppColors.btnPrimary}
-                    onPress={this.onSubmit.bind(this)}
-                />
+                    full
+                    info
+                    style={[styles.registerLogin]}
+                    onPress={this.backLogin}>
+                    <Text>返回登录</Text>
+                </Button>
             </View>
         );
     }
 
     componentDidMount() {}
 
-    onUsernameChange(text) {
-        // this.props.usernameChanged(text);
-        this.setState({
-            name: text
-        });
+    valid() {
+        let msg = '';
+        if (!this.state.cellphone) {
+            msg = '请输入用户名';
+        } else if (!this.state.password) {
+            msg = '请输入密码';
+        }
+        if (msg) {
+            Toast.showToast(msg);
+            return false;
+        }
+        return true;
     }
-    onPasswordChange(text) {
-        // this.props.usernameChanged(text);
-        this.setState({
-            password: text
-        });
+    getCode() {
+        console.log('getCode');
+        if (!this.state.cellphone) {
+            Toast.showToast('请输入手机号');
+            return;
+        }
+        let { accountAction } = this.props;
+        let data = {
+            cellphone: this.state.cellphone,
+            action: 'signup'
+        };
+        accountAction.getCaptcha(
+            data,
+            () => {
+                Toast.showToast('发送成功');
+            },
+            error => {
+                console.log('error', error);
+                Toast.showToast(error.data.message || error.data);
+            }
+        );
     }
     onSubmit() {
-        storage.save(
-            'token',
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6InBia2RmMl9zaGEyNTYkMzAwMDAkSDRVYW5CR2lYbFlTJDFLRG9YdkNsZGVGQUJ0UlBaQUhiY3RmOHYvTkcyV21YSWo2bUltbGpYdjA9IiwidXNlcl9pZCI6MTQ4NzIsInBsYXRmb3JtIjoicGMifQ.oXxkhvYmhzc5vafIai8NKTGuqNAfS9XmFszt4tD-xsI'
+        let _isCompleted = this.valid();
+        if (!_isCompleted) {
+            return;
+        }
+        let data = {
+            cellphone: this.state.cellphone,
+            password: this.state.password,
+            code: this.state.captcha
+        };
+        let { accountAction } = this.props;
+        accountAction.register(
+            data,
+            () => {
+                Actions.reset('root');
+            },
+            error => {
+                Toast.showToast(error.data.message);
+            }
         );
-        storage.save('username', '18518572248');
-
-        Actions.home();
-
-        // showToast('submit');
-        // let data = {
-        // 		cellphone: this.state.name,
-        // 		password: this.state.password
-        // }
-        // console.log(data);
-        // api.login(data)
-        // 		.then((res) => {
-        // 				showToast(res.token)
-        // 		})
-        // 		.catch((error) => {
-        // 				showToast(error.data.message)
-        // 		})
+    }
+    backLogin() {
+        Actions.pop();
     }
 }
+
+export default connect(
+    state => ({}),
+    dispatch => ({
+        accountAction: bindActionCreators(accountActions, dispatch)
+    })
+)(Register);
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff',
+        flex: 1
+    },
+    btnLogin: {
+        margin: 20
+    },
+    registerLogin: {
+        margin: 20,
+        marginTop: 0
+    },
+    codeContainer: {
+        marginTop: 25
+    },
+    inputCodeContainer: {
+        flex: 1
+    },
+    btnCodeContainer: {
+        width: 120,
+        marginRight: 15
+    }
+});

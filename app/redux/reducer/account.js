@@ -1,20 +1,24 @@
-import { handleActions } from 'redux-actions';
-
-import { ACCOUNT_LOGIN } from '../ActionTypes';
+import { ACCOUNT_LOGIN, ACCOUNT_REGISTER } from '../ActionTypes';
 import storage from '@app/storage/DeviceStorage.js';
+import { createReducer } from '../index';
 
 const initialState = {};
 
-const accountReducer = handleActions(
-    {
-        async [ACCOUNT_LOGIN](state, action) {
-            await storage.save('token', action.res);
-            return {
-                ...state,
-                ...action
-            };
-        }
+const actionHandler = {
+    async [ACCOUNT_LOGIN](state, action) {
+        await storage.save('token', action.res);
+        return {
+            ...state,
+            ...action
+        };
     },
-    initialState
-);
-export default accountReducer;
+    async [ACCOUNT_REGISTER](state, action) {
+        await storage.save('token', action.res);
+        return {
+            ...state,
+            ...action
+        };
+    }
+};
+
+export default createReducer(initialState, actionHandler);
