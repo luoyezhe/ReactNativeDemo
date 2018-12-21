@@ -77,7 +77,7 @@ const router = () => {
                             title="详情"
                             key="performanceDetail"
                             component={PerformanceDetail}
-                            back={true}
+                            hideNavBar
                         />
                         <Scene
                             title="收藏"

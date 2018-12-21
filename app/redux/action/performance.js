@@ -2,7 +2,8 @@ import {
     PERFORMANCE_LIST,
     PERFORMANCE_DETAIL,
     DYNAMIC_LIST,
-    BUSINESS_INFO
+    BUSINESS_INFO,
+    COLLECT_ORG
 } from '../ActionTypes';
 import api from '@app/api/performance.js';
 
@@ -67,6 +68,32 @@ export const getBusinessInfo = (id, success, fail) => {
                     type: BUSINESS_INFO,
                     res: res
                 });
+                success && success(res);
+            })
+            .cache(error => {
+                fail && fail(error);
+            });
+    };
+};
+// 企业收藏
+export const collectOrg = (data, success, fail) => {
+    return async (dispatch, getState) => {
+        return await api
+            .collectOrg(data)
+            .then(res => {
+                success && success(res);
+            })
+            .cache(error => {
+                fail && fail(error);
+            });
+    };
+};
+// 企业收藏
+export const unCollectOrg = (id, success, fail) => {
+    return async (dispatch, getState) => {
+        return await api
+            .unCollectOrg(id)
+            .then(res => {
                 success && success(res);
             })
             .cache(error => {

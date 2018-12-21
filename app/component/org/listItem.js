@@ -13,7 +13,7 @@ class ListItem extends React.Component {
 
     render() {
         let { item } = this.props;
-        console.log('item', item);
+        // console.log('item', item);
         if (item) {
             let _location = null;
             if (item.location) {
@@ -29,7 +29,7 @@ class ListItem extends React.Component {
             return (
                 <TouchableOpacity
                     onPress={() => {
-                        console.log('list-item-click');
+                        // console.log('list-item-click');
                         this.props.onPressItem && this.props.onPressItem();
                     }}>
                     <Card>

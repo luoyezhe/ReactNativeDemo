@@ -16,8 +16,10 @@ export const ACCOUNT_LOGIN = 'ACCOUNT_LOGIN';
 
 // bulletin
 export const BULLETIN_LIST = 'BULLETIN_LIST';
-// 收藏
-export const BULLETIN_COLLECT = 'BULLETIN_COLLECT';
+// 收藏-项目列表
+export const BULLETIN_COLLECT_LIST = 'BULLETIN_COLLECT_LIST';
+// 收藏-企业列表
+export const ORG_COLLECT_LIST = 'ORG_COLLECT_LIST';
 // 取消收藏
 export const BULLETIN_UN_COLLECT = 'BULLETIN_UN_COLLECT';
 
@@ -32,3 +34,5 @@ export const PERFORMANCE_LIST = 'PERFORMANCE_LIST';
 export const PERFORMANCE_DETAIL = 'PERFORMANCE_DETAIL';
 export const BUSINESS_INFO = 'BUSINESS_INFO';
 export const DYNAMIC_LIST = 'DYNAMIC_LIST';
+// 企业收藏
+export const COLLECT_ORG = 'COLLECT_ORG';

@@ -14,10 +14,12 @@ class BulletinItem extends React.Component {
 
     getTrendName(arr) {
         let msg = '';
-        for (let i = 0, len = arr.length; i < len; i++) {
-            if (arr[i].org_role.text === '采购人') {
-                msg = arr[i].org_name;
-                break;
+        if (arr) {
+            for (let i = 0, len = arr.length; i < len; i++) {
+                if (arr[i].org_role.text === '采购人') {
+                    msg = arr[i].org_name;
+                    break;
+                }
             }
         }
         return msg;
@@ -33,11 +35,11 @@ class BulletinItem extends React.Component {
 
     render() {
         let { item } = this.props;
-        console.log(item.title);
+        // console.log(item.title);
         return (
             <TouchableOpacity
                 onPress={() => {
-                    console.log('list-item-click');
+                    // console.log('list-item-click');
                     this.props.onPressItem && this.props.onPressItem();
                 }}>
                 <Card>

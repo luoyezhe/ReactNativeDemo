@@ -1,6 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Container, Content, Footer, FooterTab, Button } from 'native-base';
+import {
+    Container,
+    Header,
+    Content,
+    Footer,
+    FooterTab,
+    Button
+} from 'native-base';
 
 import BaseView from '@app/component/BaseView';
 import Main from '../main/home';

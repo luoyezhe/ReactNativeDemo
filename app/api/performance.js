@@ -18,6 +18,14 @@ const performance = {
         return api.get(`/v1/api/org/${id}/bulletin/`, {
             params: params
         });
+    },
+    // 企业收藏
+    collectOrg(data) {
+        return api.post(`/v1/api/org_collect/`, data);
+    },
+    // 取消企业收藏
+    unCollectOrg(id) {
+        return api.delete(`/v1/api/org_collect/${id}/`);
     }
 };
 

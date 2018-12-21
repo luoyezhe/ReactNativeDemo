@@ -16,7 +16,7 @@ class DetailContent extends React.Component {
         const { id } = this.props;
         if (id) {
             return (
-                <Container>
+                <View style={{ flex: 1 }}>
                     <Tabs tabBarPosition="overlayTop">
                         <Tab heading="业绩动态">
                             <DynamicList id={id} />
@@ -25,7 +25,7 @@ class DetailContent extends React.Component {
                             <BusinessInfo id={id} />
                         </Tab>
                     </Tabs>
-                </Container>
+                </View>
             );
         } else {
             return <View />;

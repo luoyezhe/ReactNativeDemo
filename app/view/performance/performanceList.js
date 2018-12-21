@@ -11,7 +11,7 @@ import { Spinner } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
 // import { BulletinItem, Toast } from '@app/component';
-import ListItem from './child/listItem';
+import ListItem from '../../component/org/listItem';
 import PullListView from '@app/component/common/PullLoadMoreListView';
 import Toast from '@app/component/common/toast.js';
 
