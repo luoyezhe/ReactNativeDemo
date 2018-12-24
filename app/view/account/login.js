@@ -64,6 +64,9 @@ class Login extends BaseView {
 
     componentDidMount() {
         storage.delete('token');
+        let token = storage.get('token');
+        console.log('token', token);
+        console.log('token', typeof token);
     }
 
     onUsernameChange(text) {

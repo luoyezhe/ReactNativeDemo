@@ -6,14 +6,14 @@ const initialState = {};
 
 const actionHandler = {
     async [ACCOUNT_LOGIN](state, action) {
-        await storage.save('token', action.res);
+        await storage.save('token', action.res.token);
         return {
             ...state,
             ...action
         };
     },
     async [ACCOUNT_REGISTER](state, action) {
-        await storage.save('token', action.res);
+        await storage.save('token', action.res.token);
         return {
             ...state,
             ...action

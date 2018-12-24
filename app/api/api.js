@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Urls from './Urls';
 import { BASE_URL } from '@app/config.js';
 import storage from '@app/storage/DeviceStorage.js';
 import { AsyncStorage } from 'react-native';
@@ -18,7 +17,8 @@ async function getToken() {
 async function interceptors() {
     let token = await storage.get('token');
     api.interceptors.request.use(function(request) {
-        if (token) {
+        console.log('token', token);
+        if (token && typeof token === 'string') {
             request.headers.common.Authorization = `Bearer ${token}`;
         }
         console.log('request', request);
