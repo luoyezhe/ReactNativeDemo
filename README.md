@@ -2,7 +2,7 @@
 react native study
 
 # npm install
-
+# react-native link
 # ios
 # react-native run-ios
 
