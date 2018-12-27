@@ -20,6 +20,12 @@ const bulletin = {
     },
     getBulletinContent(id) {
         return api.get(`/v1/api/bulletin/${id}/content/`);
+    },
+    addRule(data) {
+        return api.post(`/v1/api/rule/`, data);
+    },
+    getRules() {
+        return api.get(`/v1/api/rule/`);
     }
 };
 

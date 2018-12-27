@@ -1,8 +1,9 @@
 const colors = {
     // 背景
     background: '#fff',
-    grayBackground: ' #F7F7FA',
+    grayBackground: '#F7F7FA',
     seprator: '#E5E5EB',
+    borderColor: '#B4B8BC',
     // 按钮颜色
     btnPrimary: '#4182EB',
     // 文字颜色

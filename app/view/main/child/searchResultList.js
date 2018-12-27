@@ -4,16 +4,17 @@ import { Container, Header, Left, Right, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions } from 'react-native-router-flux';
+import PropTypes from 'prop-types';
 
-import * as bulletinActions from '@app/redux/action/bulletin.js';
+import * as mainActions from '@app/redux/action/main.js';
 import BaseView from '@app/component/BaseView';
 import PullListView from '@app/component/common/PullLoadMoreListView';
 import BulletinItem from '@app/component/bulletin/listItem';
 
 import { AppStyles } from '@app/style';
 
-// 招标页面
-class Bulletin extends BaseView {
+// 招标订阅搜索结果列表页
+class SearchResultList extends BaseView {
     constructor(props) {
         super(props);
         this.state = {};
@@ -21,15 +22,27 @@ class Bulletin extends BaseView {
         this.loadMore = this.loadMore.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.renderRow = this.renderRow.bind(this);
-        this.toSearch = this.toSearch.bind(this);
     }
     componentDidMount() {
-        if (this.props.bulletinDate && this.props.bulletinDate.length > 0) {
+        console.log('componentDidMount', this.props.searchInput);
+        if (!this.props.searchInput) {
             return;
         }
         InteractionManager.runAfterInteractions(() => {
             this.refreshData();
         });
+    }
+    componentWillReceiveProps(nextProps, nextState) {
+        console.log('nextProps', nextProps);
+        console.log('props', this.props.searchInput);
+        if (
+            nextProps.searchInput &&
+            nextProps.searchInput !== this.props.searchInput
+        ) {
+            InteractionManager.runAfterInteractions(() => {
+                this.refreshData();
+            });
+        }
     }
     refreshData() {
         if (this.pullList) {
@@ -39,22 +52,24 @@ class Bulletin extends BaseView {
     }
     refresh() {
         console.log('============refresh==============');
-        let { bulletinAction } = this.props;
+        let { mainAction, searchInput } = this.props;
         let params = {
-            page: 1
+            page: 1,
+            keyword_exact__contains: searchInput
         };
-        bulletinAction.getBulletinList(params, res => {
+        mainAction.getAddSubscriptionSearchList(params, res => {
             console.log('=============refreshComplete=================');
             this.pullList.refreshComplete(this.props.hasNext);
         });
     }
     loadMore() {
         console.log('============loadMore==============');
-        let { bulletinAction } = this.props;
+        let { mainAction, searchInput } = this.props;
         let params = {
-            page: this.props.page + 1
+            page: this.props.page + 1,
+            keyword_exact__contains: searchInput
         };
-        bulletinAction.getBulletinList(
+        mainAction.getAddSubscriptionSearchList(
             params,
             res => {
                 this.pullList.loadMoreComplete(this.props.hasNext);
@@ -64,10 +79,6 @@ class Bulletin extends BaseView {
             }
         );
     }
-    toSearch() {
-        Actions.push('bulletinSearch');
-    }
-
     renderRow(rowData) {
         // console.log('rowData', rowData.title);
         return (
@@ -83,17 +94,12 @@ class Bulletin extends BaseView {
     render() {
         // let dataSource = this.props.bulletinDate;
         let dataSource = super.getListDataFromSource(
-            'bulletin',
+            'main',
             this.props.bulletinDate
         );
         return (
             <Container style={{ flex: 1 }}>
-                <Header>
-                    <Right>
-                        <Icon name="search" onPress={this.toSearch} />
-                    </Right>
-                </Header>
-                <View style={{ backgroundColor: '#F7F7FA', flex: 1 }}>
+                <View style={{ backgroundColor: '#ccc', flex: 1 }}>
                     <StatusBar
                         hidden={false}
                         backgroundColor={'transparent'}
@@ -116,13 +122,20 @@ class Bulletin extends BaseView {
     }
 }
 
+SearchResultList.propTypes = {
+    searchInput: PropTypes.string
+};
+SearchResultList.defaultProps = {
+    searchInput: ''
+};
+
 export default connect(
     state => ({
-        bulletinDate: state.bulletin.bulletin.data,
-        page: state.bulletin.bulletin.page,
-        hasNext: state.bulletin.bulletin.next
+        bulletinDate: state.main.searchList.data,
+        page: state.main.searchList.page,
+        hasNext: state.main.searchList.next
     }),
     dispatch => ({
-        bulletinAction: bindActionCreators(bulletinActions, dispatch)
+        mainAction: bindActionCreators(mainActions, dispatch)
     })
-)(Bulletin);
+)(SearchResultList);

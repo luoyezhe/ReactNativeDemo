@@ -7,11 +7,13 @@ import {
     Alert,
     TouchableOpacity
 } from 'react-native';
+import { Container, Header } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
 import Toast from '@app/component/common/toast.js';
 import PersonInfo from './info';
 import storage from '@app/storage/DeviceStorage.js';
+import { AppStyles } from '@app/style';
 
 export default class MineHome extends React.Component {
     constructor(props) {
@@ -21,34 +23,38 @@ export default class MineHome extends React.Component {
 
     render() {
         return (
-            <View>
-                <PersonInfo />
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => {
-                        Actions.push('collect');
-                    }}>
-                    <View style={styles.colItem}>
-                        <Text>我的收藏</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => {
-                        Actions.push('changePassword');
-                    }}>
-                    <View style={[styles.colItem]}>
-                        <Text>修改密码</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={this.exitDialog.bind(this)}>
-                    <View style={[styles.colItem, { alignItems: 'center' }]}>
-                        <Text>退出</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <Container>
+                <Header />
+                <View style={[AppStyles.grayPageBackground]}>
+                    <PersonInfo />
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            Actions.push('collect');
+                        }}>
+                        <View style={styles.colItem}>
+                            <Text>我的收藏</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            Actions.push('changePassword');
+                        }}>
+                        <View style={[styles.colItem]}>
+                            <Text>修改密码</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={this.exitDialog.bind(this)}>
+                        <View
+                            style={[styles.colItem, { alignItems: 'center' }]}>
+                            <Text>退出</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </Container>
         );
     }
     exitDialog() {
@@ -76,6 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 15,
         justifyContent: 'center',
-        marginTop: 15
+        marginTop: 15,
+        height: 44
     }
 });

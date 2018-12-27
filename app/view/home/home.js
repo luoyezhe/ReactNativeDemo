@@ -61,7 +61,7 @@ export default class Home extends BaseView {
     render() {
         return (
             <Container>
-                <View style={{ flex: 1, backgroundColor: 'red' }}>
+                <View style={{ flex: 1, backgroundColor: '#F7F7FA' }}>
                     <this.state.AppComponent />
                 </View>
                 <Footer>

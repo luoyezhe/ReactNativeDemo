@@ -1,5 +1,6 @@
 import React from 'react';
-import { Scene, Stack, Router } from 'react-native-router-flux';
+import { Text } from 'react-native';
+import { Scene, Stack, Router, Route } from 'react-native-router-flux';
 import { Provider } from 'react-redux';
 import store from '../redux/index';
 import { AppStyles } from '../style';
@@ -10,9 +11,12 @@ import Home from '@app/view/home/home.js';
 
 // 易众标
 import MainHome from '@app/view/main/home.js';
+import BulletinAddSubscription from '@app/view/main/addSubscription.js';
+import SearchAddSubscription from '@app/view/main/search.js';
 // 招投标
 import BulletinHome from '@app/view/bulletin/home.js';
 import BulletinDetail from '@app/view/bulletin/detail.js';
+import BulletinSearch from '@app/view/bulletin/search.js';
 // 业绩库
 import PerformanceHome from '@app/view/performance/home.js';
 import PerformanceDetail from '@app/view/performance/detail.js';
@@ -28,31 +32,35 @@ import LoadingModal from '@app/component/common/LoadingModal';
 import Test from '@app/view/test/test.js';
 
 const router = () => {
+    // headerMode="none"
     return (
         <Provider store={store}>
-            <Router>
+            <Router hideNavBar={true}>
                 <Stack>
                     <Scene title="登录" key="login" component={Login} />
                     <Scene title="注册" key="register" component={Register} />
                     <Scene
                         key="root"
+                        hideNavBar={true}
                         navigationBarStyle={AppStyles.navigationBar}>
                         <Scene
-                            title="首页"
                             key="home"
-                            hideNavBar
-                            component={Home}>
+                            hideNavBar={true}
+                            component={Home}
+                            tabs>
                             <Scene
                                 title="易众标"
                                 key="main"
                                 component={MainHome}
-                                hideNavBar
+                                hideNavBar={false}
                             />
                             <Scene
                                 title="招投标"
                                 key="bulletin"
                                 component={BulletinHome}
-                                hideNavBar
+                                hideNavBar={false}
+                                needRightBtn={true}
+                                renderRightButton={() => <Text>Right</Text>}
                             />
                             <Scene
                                 title="业绩库"
@@ -71,24 +79,48 @@ const router = () => {
                             title="详情"
                             key="bulletinDetail"
                             component={BulletinDetail}
+                            hideNavBar={false}
+                            back={true}
+                        />
+                        <Scene
+                            title="搜索"
+                            key="bulletinSearch"
+                            component={BulletinSearch}
+                            hideNavBar={false}
+                            back={true}
+                        />
+                        <Scene
+                            title="搜索订阅"
+                            key="searchSubscription"
+                            component={BulletinAddSubscription}
+                            hideNavBar={false}
+                            back={true}
+                        />
+                        <Scene
+                            title="搜索订阅"
+                            key="searchAddSubscription"
+                            component={SearchAddSubscription}
+                            hideNavBar={false}
                             back={true}
                         />
                         <Scene
                             title="详情"
                             key="performanceDetail"
                             component={PerformanceDetail}
-                            hideNavBar
+                            hideNavBar={false}
                         />
                         <Scene
                             title="收藏"
                             key="collect"
                             component={CollectList}
+                            hideNavBar={false}
                             back={true}
                         />
                         <Scene
                             title="修改密码"
                             key="changePassword"
                             component={ChangePassword}
+                            hideNavBar={false}
                             back={true}
                         />
                         <Scene

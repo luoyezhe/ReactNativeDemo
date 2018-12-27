@@ -8,7 +8,7 @@
     "dev:ios": "react-native run-ios --port 8081 -simulator 'iPhone X'",
     "dev:android": "react-native run-android",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "build:ios": "react-native bundle --entry-file index.ios.js --platform ios --bundle-output ./ios/react.bundle",
+    "build:ios": "react-native bundle --entry-file index.js --platform ios --bundle-output ./ios/react.bundle",
     "build:android": "cd android && ./gradlew assembleRelease",
     "test": "jest",
     "lint": "eslint app --fix",
@@ -16,10 +16,10 @@
     "format": "find app -name '*.js' | xargs prettier --write --single-quote"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "native-base": "^2.8.1",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
+    "react-native-axios": "^0.17.1",
     "react-native-debugger-open": "^0.3.17",
     "react-native-elements": "^0.19.1",
     "react-native-linear-gradient": "^2.4.3",

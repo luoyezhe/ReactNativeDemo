@@ -16,6 +16,7 @@ import PullListView from '@app/component/common/PullLoadMoreListView';
 import Toast from '@app/component/common/toast.js';
 
 import api from '@app/api/performance';
+import { AppStyles } from '@app/style';
 
 // 企业业绩查询-列表
 export default class PerformanceList extends React.Component {
@@ -67,7 +68,7 @@ export default class PerformanceList extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={[AppStyles.grayPageBackground]}>
                 <StatusBar
                     hidden={false}
                     backgroundColor={'transparent'}

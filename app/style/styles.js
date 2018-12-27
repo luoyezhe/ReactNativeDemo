@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
         shadowOpacity: null,
         shadowRadius: null
     },
+    grayPageBackground: {
+        backgroundColor: colors.grayBackground,
+        flex: 1
+    },
     navigationBar: {
         backgroundColor: colors.background,
         paddingTop: StatusBar.currentHeight,

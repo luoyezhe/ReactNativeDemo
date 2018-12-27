@@ -9,7 +9,7 @@ export const UPDATE_DATABASE = 'UPDATE_DATABASE';
 export const DELETE_DATABASE = 'DELETE_DATABASE';
 
 // 收藏、取消收藏更改database
-export const UPDATE_DATABASE_COLLECT = 'UPDATE_DATABASE_COLLECT'
+export const UPDATE_DATABASE_COLLECT = 'UPDATE_DATABASE_COLLECT';
 
 // login
 export const ACCOUNT_LOGIN = 'ACCOUNT_LOGIN';
@@ -37,3 +37,12 @@ export const BUSINESS_INFO = 'BUSINESS_INFO';
 export const DYNAMIC_LIST = 'DYNAMIC_LIST';
 // 企业收藏
 export const COLLECT_ORG = 'COLLECT_ORG';
+
+// 添加订阅-搜索结果列表页
+export const INIT_ADD_SUBSCRIPTION_BULLETIN_LIST =
+    'INIT_ADD_SUBSCRIPTION_BULLETIN_LIST';
+export const ADD_SUBSCRIPTION_BULLETIN_LIST = 'ADD_SUBSCRIPTION_BULLETIN_LIST';
+// 添加订阅
+export const ADD_RULE = 'ADD_RULE';
+// 已订阅的关键词列表
+export const RULES_LIST = 'RULES_LIST';

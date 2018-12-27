@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import {
-    Container,
-    Content,
-    Header,
-    Footer,
-    FooterTab,
-    Button
-} from 'native-base';
+import { Container, Content, Header, Left, Icon } from 'native-base';
 
 import BaseView from '@app/component/BaseView';
 import { Actions } from 'react-native-router-flux';
@@ -30,6 +23,7 @@ class BulletinDetail extends React.Component {
         };
         this.getDetail = this.getDetail.bind(this);
         this.collectAction = this.collectAction.bind(this);
+        this.back = this.back.bind(this);
     }
     componentDidMount() {
         this.getDetail();
@@ -89,6 +83,10 @@ class BulletinDetail extends React.Component {
                 Toase.showToast('取消收藏成功');
             });
         }
+    }
+
+    back() {
+        Actions.pop();
     }
 
     render() {

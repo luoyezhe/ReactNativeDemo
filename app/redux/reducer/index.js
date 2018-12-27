@@ -4,6 +4,7 @@ import account from './account';
 import bulletin from './bulletin';
 import collect from './collect';
 import mine from './mine';
+import main from './main';
 import performance from './performance';
 
 const initReducer = combineReducers({
@@ -12,6 +13,7 @@ const initReducer = combineReducers({
     bulletin,
     collect,
     mine,
+    main,
     performance
 });
 

@@ -18,8 +18,8 @@ class Login extends BaseView {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            password: ''
+            name: '18518572248',
+            password: 'Abcd1234'
         };
         this.valid = this.valid.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -43,6 +43,7 @@ class Login extends BaseView {
                             onChangeText={text =>
                                 this.setState({ password: text })
                             }
+                            secureTextEntry={true}
                             value={this.state.password}
                         />
                     </Item>
@@ -108,7 +109,7 @@ class Login extends BaseView {
         let { accountAction } = this.props;
         accountAction.login(
             data,
-            () => {
+            res => {
                 Actions.reset('root');
             },
             error => {

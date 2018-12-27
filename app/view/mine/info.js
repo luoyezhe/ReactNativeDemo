@@ -53,7 +53,10 @@ class PersonInfo extends React.Component {
             maxHeight: 500,
             storageOptions: {
                 skipBackup: true
-            }
+            },
+            title: '选择图片',
+            takePhotoButtonTitle: '相机',
+            chooseFromLibraryButtonTitle: '相册'
         };
 
         ImagePicker.showImagePicker(options, response => {
@@ -92,9 +95,9 @@ class PersonInfo extends React.Component {
                     .catch(error => {
                         Toast.showToast(error.data.message);
                     });
-                // this.setState({
-                //     avatarSource: source
-                // });
+                this.setState({
+                    avatarSource: source
+                });
             }
         });
     }
@@ -107,14 +110,22 @@ class PersonInfo extends React.Component {
                     <TouchableOpacity
                         onPress={this.selectPhotoTapped.bind(this)}>
                         <View style={[styles.avatar, styles.avatarContainer]}>
-                            {userInfo.head_img_url === null ? (
+                            {/*{userInfo.head_img_url === null ? (*/}
+                            {/*<Text>选择头像</Text>*/}
+                            {/*) : (*/}
+                            {/*<Image*/}
+                            {/*style={styles.avatar}*/}
+                            {/*source={{*/}
+                            {/*uri: this.state.userInfo.head_img_url*/}
+                            {/*}}*/}
+                            {/*/>*/}
+                            {/*)}*/}
+                            {this.state.avatarSource === null ? (
                                 <Text>选择头像</Text>
                             ) : (
                                 <Image
                                     style={styles.avatar}
-                                    source={{
-                                        uri: this.state.userInfo.head_img_url
-                                    }}
+                                    source={this.state.avatarSource}
                                 />
                             )}
                         </View>

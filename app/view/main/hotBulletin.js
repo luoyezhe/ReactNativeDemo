@@ -7,18 +7,14 @@ import {
     StatusBar,
     StyleSheet
 } from 'react-native';
-
-import { Spinner } from 'native-base';
+import { Icon } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
 // import { BulletinItem, Toast } from '@app/component';
 import BulletinItem from '@app/component/bulletin/listItem.js';
 import PullListView from '@app/component/common/PullLoadMoreListView';
 import Toast from '@app/component/common/toast.js';
-import RefreshListView, {
-    RefreshState
-} from '@app/component/RefreshListView.js';
-
+import { AppColors, AppStyles } from '@app/style';
 import api from '@app/api/bulletin';
 
 export default class HotBulletin extends React.Component {
@@ -30,11 +26,15 @@ export default class HotBulletin extends React.Component {
         this.renderRow = this.renderRow.bind(this);
         this.refresh = this.refresh.bind(this);
         this.refreshData = this.refreshData.bind(this);
+        this.goToSearch = this.goToSearch.bind(this);
     }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             this.refreshData();
         });
+    }
+    goToSearch() {
+        Actions.push('searchSubscription');
     }
     refreshData() {
         if (this.pullList) {
@@ -70,13 +70,19 @@ export default class HotBulletin extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={[AppStyles.grayPageBackground]}>
                 <StatusBar
                     hidden={false}
                     backgroundColor={'transparent'}
                     translucent
                     barStyle={'light-content'}
                 />
+                <View style={styles.searchWarp}>
+                    <Text style={styles.search} onPress={this.goToSearch}>
+                        <Icon name="search" style={{ fontSize: 14 }} />
+                        输入您想关注的项目，如智慧城市
+                    </Text>
+                </View>
                 <Text style={styles.header}>热门推荐</Text>
                 <PullListView
                     style={{ flex: 1 }}
@@ -94,6 +100,18 @@ export default class HotBulletin extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    searchWarp: {
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        padding: 15
+    },
+    search: {
+        borderColor: AppColors.borderColor,
+        borderWidth: 1,
+        alignItems: 'center',
+        padding: 10,
+        color: AppColors.textHint
+    },
     header: {
         backgroundColor: '#fff',
         padding: 15,

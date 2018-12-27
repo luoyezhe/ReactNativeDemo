@@ -1,6 +1,6 @@
 import api from './api';
 
-export default {
+const account = {
     login(data) {
         return api.post('/v1/api/user/token/', data);
     },
@@ -14,3 +14,5 @@ export default {
         return api.put('/v1/api/user/update/', data);
     }
 };
+
+export default account;

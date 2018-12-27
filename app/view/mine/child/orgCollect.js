@@ -85,7 +85,7 @@ class OrgCollect extends React.Component {
         let dataSource = this.props.collectData;
         // console.log('dataSource', dataSource);
         return (
-            <View style={{ backgroundColor: '#ccc', flex: 1 }}>
+            <View style={{ backgroundColor: '#F7F7FA', flex: 1 }}>
                 <StatusBar
                     hidden={false}
                     backgroundColor={'transparent'}

@@ -2,22 +2,34 @@ import { ACCOUNT_LOGIN, ACCOUNT_REGISTER } from '../ActionTypes';
 import api from '../../api/account';
 import { postFetch } from '../../api/BaseRequest';
 import storage from '@app/storage/DeviceStorage.js';
+import { AsyncStorage } from 'react-native';
 
 export const login = (data, success, fail) => {
+    console.log('api', api.login(data));
     return async (dispatch, getState) => {
-        return await api
+        await api
             .login(data)
             .then(res => {
-                storage.save('token', res.token);
-                // dispatch({
-                //     type: ACCOUNT_LOGIN,
-                //     res: res
-                // });
+                console.log(res);
+                // storage.save('token', res.token);
+                AsyncStorage.setItem('token', res.token);
                 success && success(res);
             })
-            .cache(error => {
+            .catch(error => {
+                console.log(error);
                 fail && fail(error);
             });
+        // .then(res => {
+        //     storage.save('token', res.token);
+        //     // dispatch({
+        //     //     type: ACCOUNT_LOGIN,
+        //     //     res: res
+        //     // });
+        //     success && success(res);
+        // })
+        // .cache(error => {
+        //     fail && fail(error);
+        // });
     };
 };
 export const register = (data, success, fail) => {

@@ -103,7 +103,7 @@ class PerformanceDetail extends React.Component {
         let { detail, id } = this.props;
         console.log('detail', detail);
         return (
-            <Container>
+            <Container style={{ flex: 1 }}>
                 <Header>
                     <Left>
                         <Button transparent onPress={this.back}>
