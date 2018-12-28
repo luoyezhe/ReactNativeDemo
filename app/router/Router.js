@@ -17,11 +17,14 @@ import SearchAddSubscription from '@app/view/main/search.js';
 import BulletinHome from '@app/view/bulletin/home.js';
 import BulletinDetail from '@app/view/bulletin/detail.js';
 import BulletinSearch from '@app/view/bulletin/search.js';
+import ManageRule from '@app/view/bulletin/manageRule.js';
+import AddRule from '@app/view/bulletin/addRule.js';
 // 业绩库
 import PerformanceHome from '@app/view/performance/home.js';
 import PerformanceDetail from '@app/view/performance/detail.js';
 // 我的
 import MineHome from '@app/view/mine/home.js';
+import AboutPage from '@app/view/mine/aboutPage.js';
 // 收藏列表
 import CollectList from '@app/view/mine/collect.js';
 // 修改密码
@@ -30,12 +33,13 @@ import ChangePassword from '@app/view/mine/changePassword.js';
 import LoadingModal from '@app/component/common/LoadingModal';
 
 import Test from '@app/view/test/test.js';
+import BackUtils from '@app/utils/backUtils';
 
 const router = () => {
     // headerMode="none"
     return (
         <Provider store={store}>
-            <Router hideNavBar={true}>
+            <Router hideNavBar={true} backAndroidHandler={BackUtils()}>
                 <Stack>
                     <Scene title="登录" key="login" component={Login} />
                     <Scene title="注册" key="register" component={Register} />
@@ -83,6 +87,20 @@ const router = () => {
                             back={true}
                         />
                         <Scene
+                            title="管理订阅"
+                            key="manageRule"
+                            component={ManageRule}
+                            hideNavBar={false}
+                            back={true}
+                        />
+                        <Scene
+                            title="添加订阅词"
+                            key="addRule"
+                            component={AddRule}
+                            hideNavBar={false}
+                            back={true}
+                        />
+                        <Scene
                             title="搜索"
                             key="bulletinSearch"
                             component={BulletinSearch}
@@ -120,6 +138,13 @@ const router = () => {
                             title="修改密码"
                             key="changePassword"
                             component={ChangePassword}
+                            hideNavBar={false}
+                            back={true}
+                        />
+                        <Scene
+                            title="关于"
+                            key="aboutPage"
+                            component={AboutPage}
                             hideNavBar={false}
                             back={true}
                         />

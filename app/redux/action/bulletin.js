@@ -1,4 +1,4 @@
-import api from '@app/api/bulletin';
+import api from '../../api/bulletin';
 import {
     BULLETIN_LIST,
     ADD_DATABASE,
@@ -7,6 +7,7 @@ import {
 } from '../ActionTypes';
 
 export const getBulletinList = (params, success, fail) => {
+    console.log('api', api);
     return async (dispatch, getState) => {
         return await api
             .getList(params)

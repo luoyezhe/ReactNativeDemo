@@ -18,8 +18,8 @@ class Login extends BaseView {
     constructor(props) {
         super(props);
         this.state = {
-            name: '18518572248',
-            password: 'Abcd1234'
+            name: '',
+            password: ''
         };
         this.valid = this.valid.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -35,6 +35,7 @@ class Login extends BaseView {
                         <Input
                             onChangeText={text => this.setState({ name: text })}
                             value={this.state.name}
+                            clearButtonMode="while-editing"
                         />
                     </Item>
                     <Item floatingLabel last>
@@ -45,6 +46,7 @@ class Login extends BaseView {
                             }
                             secureTextEntry={true}
                             value={this.state.password}
+                            clearButtonMode="while-editing"
                         />
                     </Item>
                     <Item />
@@ -116,29 +118,6 @@ class Login extends BaseView {
                 Toast.showToast(error.data.message);
             }
         );
-        // storage.save(
-        //     'token',
-        //     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6InBia2RmMl9zaGEyNTYkMzAwMDAkSDRVYW5CR2lYbFlTJDFLRG9YdkNsZGVGQUJ0UlBaQUhiY3RmOHYvTkcyV21YSWo2bUltbGpYdjA9IiwidXNlcl9pZCI6MTQ4NzIsInBsYXRmb3JtIjoicGMifQ.oXxkhvYmhzc5vafIai8NKTGuqNAfS9XmFszt4tD-xsI'
-        // );
-        // storage.save('username', '18518572248');
-        // Actions.reset('root');
-
-        // Actions.bulletinOther();
-        // Actions.reset('bulltinOther');
-        // Actions.home();
-        // showToast('submit');
-        // let data = {
-        // 		cellphone: this.state.name,
-        // 		password: this.state.password
-        // }
-        // console.log(data);
-        // api.login(data)
-        // 		.then((res) => {
-        // 				showToast(res.token)
-        // 		})
-        // 		.catch((error) => {
-        // 				showToast(error.data.message)
-        // 		})
     }
     register() {
         Actions.register();

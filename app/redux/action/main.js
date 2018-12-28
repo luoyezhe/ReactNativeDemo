@@ -4,6 +4,7 @@ import {
     INIT_ADD_SUBSCRIPTION_BULLETIN_LIST,
     ADD_RULE,
     RULES_LIST,
+    DELETE_RULE,
     ADD_DATABASE
 } from '../ActionTypes';
 
@@ -60,6 +61,18 @@ export const getRules = (params, success, fail) => {
                     type: RULES_LIST,
                     res: res
                 });
+                success && success(res);
+            })
+            .cache(error => {
+                fail && fail(error);
+            });
+    };
+};
+export const deleteRule = (params, success, fail) => {
+    return async (dispatch, getState) => {
+        return await api
+            .deleteRule(params)
+            .then(res => {
                 success && success(res);
             })
             .cache(error => {

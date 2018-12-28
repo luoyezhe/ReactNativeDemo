@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as mainActions from '@app/redux/action/main';
+// import * as mainActions from '@app/redux/action/main';
 import { shortLocation } from '@app/constant/common';
 import Toast from '@app/component/common/toast';
 
@@ -27,15 +27,22 @@ class SelectArea extends React.Component {
 
     itemClick(item) {
         console.log(item);
-        let oldArr = [].concat(this.state.selectArr);
-        let index = oldArr.indexOf(item);
-        if (index >= 0) {
-            oldArr.splice(index, 1);
+        let newArr = null;
+        if (!item) {
+            // 选择全国
+            newArr = [];
         } else {
-            oldArr.push(item);
+            // 其他地区
+            newArr = [].concat(this.state.selectArr);
+            let index = newArr.indexOf(item);
+            if (index >= 0) {
+                newArr.splice(index, 1);
+            } else {
+                newArr.push(item);
+            }
         }
         this.setState({
-            selectArr: oldArr
+            selectArr: newArr
         });
     }
 
@@ -47,27 +54,13 @@ class SelectArea extends React.Component {
 
     confirmSelect() {
         console.log('confirmSelect-selectArr');
-        console.log(this.props);
-        const { mainAction, name } = this.props;
         const { selectArr } = this.state;
-        let data = {
-            keyword: name,
-            location: selectArr
-        };
-        mainAction.addRule(
-            data,
-            () => {
-                Toast.showToast('订阅成功');
-                this.props.close();
-            },
-            error => {
-                Toast.showToast(error.data.message || error.data);
-            }
-        );
+        const { confirm } = this.props;
+        confirm(selectArr);
     }
 
     renderAreaItems() {
-        let _views = Object.keys(shortLocation).map((item, index) => {
+        let _items = Object.keys(shortLocation).map((item, index) => {
             let _styles = [styles.areaItem];
             if (this.state.selectArr.indexOf(item) >= 0) {
                 _styles.push(styles.areaItemActive);
@@ -84,7 +77,22 @@ class SelectArea extends React.Component {
                 </Text>
             );
         });
-        return _views;
+        let _totalStyles = [styles.areaItem];
+        if (this.state.selectArr.length === 0) {
+            _totalStyles.push(styles.areaItemActive);
+        }
+        return (
+            <View style={[styles.areaItems]}>
+                <Text
+                    style={_totalStyles}
+                    onPress={() => {
+                        this.itemClick(null);
+                    }}>
+                    全国
+                </Text>
+                {_items}
+            </View>
+        );
     }
 
     render() {
@@ -97,7 +105,8 @@ class SelectArea extends React.Component {
                     <Text style={[styles.descTitle]}>地区范围</Text>
                     <Text style={[styles.desc]}>可选6个地区</Text>
                 </View>
-                <View style={[styles.areaItems]}>{_views}</View>
+                {/*<View style={[styles.areaItems]}>{_views}</View>*/}
+                {_views}
                 <View style={[styles.btnContainer]}>
                     <Button light onPress={this.resetSelect.bind(this)}>
                         <Text style={{ color: '#91929C' }}>重置</Text>
@@ -115,17 +124,20 @@ class SelectArea extends React.Component {
 
 SelectArea.propTypes = {
     name: PropTypes.string,
-    close: PropTypes.func
+    close: PropTypes.func,
+    confirm: PropTypes.func
 };
 
-export default connect(
-    state => ({
-        // count: state.main.searchList.count
-    }),
-    dispatch => ({
-        mainAction: bindActionCreators(mainActions, dispatch)
-    })
-)(SelectArea);
+export default SelectArea;
+
+// export default connect(
+//     state => ({
+//         // count: state.main.searchList.count
+//     }),
+//     dispatch => ({
+//         mainAction: bindActionCreators(mainActions, dispatch)
+//     })
+// )(SelectArea);
 
 const styles = StyleSheet.create({
     container: {

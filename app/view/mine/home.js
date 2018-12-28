@@ -47,6 +47,15 @@ export default class MineHome extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={0.8}
+                        onPress={() => {
+                            Actions.push('aboutPage');
+                        }}>
+                        <View style={[styles.colItem]}>
+                            <Text>关于</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
                         onPress={this.exitDialog.bind(this)}>
                         <View
                             style={[styles.colItem, { alignItems: 'center' }]}>

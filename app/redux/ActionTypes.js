@@ -46,3 +46,5 @@ export const ADD_SUBSCRIPTION_BULLETIN_LIST = 'ADD_SUBSCRIPTION_BULLETIN_LIST';
 export const ADD_RULE = 'ADD_RULE';
 // 已订阅的关键词列表
 export const RULES_LIST = 'RULES_LIST';
+// 删除订阅
+export const DELETE_RULE = 'DELETE_RULE';

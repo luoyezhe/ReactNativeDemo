@@ -29,7 +29,10 @@ class SearchAddSubscription extends React.Component {
         this.addSubscription = this.addSubscription.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.getRules = this.getRules.bind(this);
-        this.renderAddSubscriptionBtn = this.renderAddSubscriptionBtn.bind(this);
+        this.renderAddSubscriptionBtn = this.renderAddSubscriptionBtn.bind(
+            this
+        );
+        this.areaSelected = this.areaSelected.bind(this);
     }
     componentWillMount() {
         console.log('componentWillMount');
@@ -49,6 +52,24 @@ class SearchAddSubscription extends React.Component {
             return;
         }
         this.modal.open();
+    }
+
+    areaSelected(arr) {
+        const { mainAction } = this.props;
+        let data = {
+            keyword: this.state.searchInput,
+            location: arr
+        };
+        mainAction.addRule(
+            data,
+            () => {
+                Toast.showToast('订阅成功');
+                this.modal.close();
+            },
+            error => {
+                Toast.showToast(error.data.message || error.data);
+            }
+        );
     }
 
     closeModal() {
@@ -85,7 +106,11 @@ class SearchAddSubscription extends React.Component {
             addTextStyle = styles.addText;
         }
         return (
-            <Button small disabled={disabled} style={[addBtnStyle]} onPress={this.addSubscription}>
+            <Button
+                small
+                disabled={disabled}
+                style={[addBtnStyle]}
+                onPress={this.addSubscription}>
                 <Icon style={[addIconStyle]} name="add" />
                 <Text style={[addTextStyle]}>{addText}</Text>
             </Button>
@@ -136,6 +161,7 @@ class SearchAddSubscription extends React.Component {
                     <SelectArea
                         name={this.state.searchInput}
                         close={this.closeModal}
+                        confirm={this.areaSelected}
                     />
                 </Modal>
             </View>
