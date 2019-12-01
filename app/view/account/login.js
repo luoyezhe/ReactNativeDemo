@@ -39,6 +39,12 @@ export default class Login extends BaseView {
                     backgroundColor={AppColors.brand.primary}
                     onPress={this.onSubmit.bind(this)}
                 />
+                <Button
+                    title="测试页"
+                    buttonStyle={{ marginTop: 10 }}
+                    backgroundColor={AppColors.brand.primary}
+                    onPress={this.toTestPage.bind(this)}
+                />
             </View>
         );
     }
@@ -80,5 +86,8 @@ export default class Login extends BaseView {
         // 		.catch((error) => {
         // 				showToast(error.data.message)
         // 		})
+    }
+    toTestPage() {
+        Actions.test();
     }
 }

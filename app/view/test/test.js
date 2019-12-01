@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    FlatList,
-    ActivityIndicator,
-    TouchableOpacity,
-    Image,
-    ItemSeparatorComponent,
-    TouchableHighlight
-} from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 
 import BaseView from '@app/component/BaseView';
+import FadeInView from './FadeInView';
 
 // demo页面
 export default class Test extends BaseView {
@@ -19,41 +11,50 @@ export default class Test extends BaseView {
         this.state = {
             isRefresh: false
         };
-        this._onPress = this._onPress.bind(this);
-        this._refresh = this._refresh.bind(this);
     }
-    _onPress() {
-        console.log('item click');
-    }
-    _refresh() {
-        this.setState({
-            isRefresh: true
-        });
-        console.log('_refresh');
-    }
+
     render() {
-        let data = [
-            { title: 'Title Text', key: 'item1' },
-            { title: 'Title Text', key: 'item1' }
-        ];
         return (
-            <View>
-                <FlatList
-                    data={data}
-                    renderItem={({ item, separators }) => (
-                        <TouchableHighlight
-                            onPress={() => this._onPress(item)}
-                            onShowUnderlay={separators.highlight}
-                            onHideUnderlay={separators.unhighlight}>
-                            <View style={{ backgroundColor: 'white' }}>
-                                <Text>{item.title}</Text>
-                            </View>
-                        </TouchableHighlight>
-                    )}
-                    onRefresh={this._refresh}
-                    refreshing={this.state.isRefresh}
-                />
+            <View style={[styles.container]}>
+                <View style={[styles.container1]} />
+                <View style={[styles.container2]} />
+                <View style={[styles.container3]} />
+                {/*<FadeInView style={[styles.container4]} />*/}
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+        // justifyContent: 'space-evenly'
+    },
+    container1: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'red'
+    },
+    container2: {
+        width: 70,
+        height: 70,
+        backgroundColor: 'blue'
+    },
+    container3: {
+        width: 100,
+        height: 100,
+        ...Platform.select({
+            ios: {
+                backgroundColor: 'green'
+            },
+            android: {
+                backgroundColor: 'green'
+            }
+        })
+    },
+    container4: {
+        height: 150,
+        width: 150,
+        backgroundColor: 'red'
+    }
+});

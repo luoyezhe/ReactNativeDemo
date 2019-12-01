@@ -87,6 +87,7 @@ const router = () => {
                             key="test"
                             component={Test}
                             hideNavBar
+                            initial
                         />
                     </Stack>
                 </Modal>
